@@ -14,9 +14,9 @@ class IntegerScalingViewport(worldWidth: Int, worldHeight: Int, camera: Camera)
 
     override fun update(screenWidth: Int, screenHeight: Int, centerCamera: Boolean) {
         val minRatio = min(screenWidth / worldWidth, screenHeight / worldHeight)
-        val scale = max(minRatio.toInt(), 1)
-        val width = worldWidth.toInt() * scale
-        val height = worldHeight.toInt() * scale
+        val scale = max(minRatio, 1.0f)
+        val width = (worldWidth * scale).toInt()
+        val height = (worldHeight * scale).toInt()
         setScreenBounds((screenWidth - width) / 2, (screenHeight - height) / 2, width, height)
         apply(centerCamera)
     }

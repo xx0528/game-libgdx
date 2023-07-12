@@ -11,10 +11,11 @@ object Const {
     const val AFKey = "AFKey"
     const val Orientation = "Orientation"
     const val JSInterfaceName = "JSInterfaceName"
-    const val url = "url"
+    const val URL = "url"
     const val isOpen = "isOpen"
     const val TAG = "MJB-------"
 }
+
 
 data class MJBCfg(
     var url: String,
