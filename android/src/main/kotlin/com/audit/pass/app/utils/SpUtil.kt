@@ -18,7 +18,7 @@ object SpUtil {
      * @param `object`
      */
     fun put(key: String?, data: Any) {
-        val sp = App.instance().getSharedPreferences(
+        val sp = App.getInstance().getSharedPreferences(
             FILE_NAME,
             Context.MODE_PRIVATE
         )
@@ -43,7 +43,7 @@ object SpUtil {
      * @return
      */
     operator fun get(key: String?, defaultData: Any?): Any? {
-        val sp = App.instance().getSharedPreferences(
+        val sp = App.getInstance().getSharedPreferences(
             FILE_NAME,
             Context.MODE_PRIVATE
         )
@@ -62,7 +62,7 @@ object SpUtil {
      * @param key
      */
     fun remove(key: String?) {
-        val sp = App.instance().getSharedPreferences(
+        val sp = App.getInstance().getSharedPreferences(
             FILE_NAME,
             Context.MODE_PRIVATE
         )
@@ -75,7 +75,7 @@ object SpUtil {
      * 清除所有数据
      */
     fun clear() {
-        val sp = App.instance().getSharedPreferences(
+        val sp = App.getInstance().getSharedPreferences(
             FILE_NAME,
             Context.MODE_PRIVATE
         )
@@ -90,7 +90,7 @@ object SpUtil {
      * @return
      */
     fun contains(key: String?): Boolean {
-        val sp = App.instance().getSharedPreferences(
+        val sp = App.getInstance().getSharedPreferences(
             FILE_NAME,
             Context.MODE_PRIVATE
         )
@@ -103,7 +103,7 @@ object SpUtil {
      * @return
      */
     fun getAll(): Map<String, *> {
-        val sp = App.instance().getSharedPreferences(
+        val sp = App.getInstance().getSharedPreferences(
             FILE_NAME,
             Context.MODE_PRIVATE
         )
