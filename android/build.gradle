@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-  compileSdk 33
+  compileSdk 34
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -34,15 +34,15 @@ android {
   defaultConfig {
     applicationId 'com.libgdx.game'
     minSdkVersion 19
-    targetSdkVersion 33
+    targetSdkVersion 34
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
   }
   namespace "com.libgdx.game"
   compileOptions {
-    sourceCompatibility "11"
-    targetCompatibility "11"
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
     coreLibraryDesugaringEnabled true
   }
   kotlinOptions.jvmTarget = "1.8"
