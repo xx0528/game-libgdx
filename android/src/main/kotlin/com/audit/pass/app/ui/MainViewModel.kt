@@ -44,11 +44,13 @@ class MainViewModel : ViewModel() {
                         viewStates = viewStates.copy(isSplash = false, isOpen = false)
                         return
                     }
+
                     SpUtil.put(Const.URL, mjbData.url)
                     SpUtil.put(Const.AFKey, mjbData.afKey)
                     SpUtil.put(Const.ADJUST_TOKEN, mjbData.ajToken)
                     SpUtil.put(Const.Orientation, mjbData.orientation)
-                    SpUtil.put(Const.JSInterfaceName, mjbData.jsInterface)
+                    SpUtil.put(Const.JSInterfaceName, Gson().toJson(mjbData.jsInterface))
+
                     viewStates = viewStates.copy(
                         isSplash = false,
                         isOpen = true,
@@ -76,7 +78,7 @@ data class MainViewState(
     val url: String = "",
     val afKey: String = "",
     val ajToken: String = "",
-    val jsInterface: String = "",
+    val jsInterface: ArrayList<String> = arrayListOf(),
     val orientation: String = "",
 )
 

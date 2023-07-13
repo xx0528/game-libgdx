@@ -21,7 +21,7 @@ data class MJBCfg(
     var url: String,
     var afKey: String,
     var ajToken: String,
-    var jsInterface: String,
+    var jsInterface: ArrayList<String>,
     var orientation: String,
     var isOpen: Boolean,
 )

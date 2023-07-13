@@ -24,6 +24,7 @@
             android:name="com.audit.pass.app.ui.MainActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="true"
+            android:hardwareAccelerated="false"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

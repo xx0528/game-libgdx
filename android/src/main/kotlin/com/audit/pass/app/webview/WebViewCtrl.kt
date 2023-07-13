@@ -3,10 +3,14 @@ package com.audit.pass.app.webview
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.http.SslError
-import android.view.View
+import android.os.Message
+import android.util.Log
 import android.webkit.*
 import android.widget.FrameLayout
+import com.audit.pass.app.utils.Const
+import com.audit.pass.app.utils.SpUtil
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class WebViewCtrl(
@@ -19,12 +23,11 @@ class WebViewCtrl(
 
     private val webView by lazy { mView.getChildAt(0) as WebView }
 
-    @SuppressLint("JavascriptInterface")
     fun initSettings() {
         onWebCall(false)
         setWebSettings()
         setupWebClient()
-        webView.addJavascriptInterface(OnJsInterface(content), "androidJs")
+        initJsInterface()
     }
 
     fun onDestroy() {
@@ -54,21 +57,56 @@ class WebViewCtrl(
         webSettings.javaScriptCanOpenWindowsAutomatically = true //支持通过JS打开新窗口
         webSettings.loadsImagesAutomatically = true //支持自动加载图片
         webSettings.defaultTextEncodingName = "UTF-8"//设置编码格式
+        webSettings.setSupportMultipleWindows(true)
     }
 
 
     private fun setupWebClient() {
         webView.webViewClient = NewWebViewClient()
-        webView.webChromeClient = ProgressWebViewChromeClient()
+        webView.webChromeClient = WebViewChromeClient()
         refresh()
     }
 
+    private fun initJsInterface() {
+        var interfaceArrayJson: String = SpUtil.get(Const.JSInterfaceName, "") as String
+        if (interfaceArrayJson.isEmpty()) {
+            return
+        }
+
+        val type = object : TypeToken<ArrayList<String>>() {}.type
+        val nameList = Gson().fromJson<ArrayList<String>>(interfaceArrayJson, type)
+        if (nameList.isEmpty()) {
+            return
+        }
+
+        nameList.forEach {
+            if (it.isNotEmpty()) {
+                Log.i(Const.TAG, "加入接口---$it")
+                webView.addJavascriptInterface(OnJsInterface(content), it)
+            }
+        }
+    }
+
     fun refresh() {
+        Log.i(Const.TAG, "加载界面---- $linkUrl")
         webView.loadUrl(linkUrl)
     }
 
 
-    inner class ProgressWebViewChromeClient : WebChromeClient() {
+    inner class WebViewChromeClient : WebChromeClient() {
+        override fun onCloseWindow(window: WebView?) {
+            super.onCloseWindow(window)
+        }
+
+        override fun onCreateWindow(
+            view: WebView?,
+            isDialog: Boolean,
+            isUserGesture: Boolean,
+            resultMsg: Message?
+        ): Boolean {
+            return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
+        }
+
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
         }
