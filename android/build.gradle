@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'android-junk-code'
 
 android {
   compileSdk 34
@@ -60,6 +61,24 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion '1.4.7'
   }
+
+  androidJunkCode {
+    variantConfig {
+      release {
+//注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+        packageBase = 'com.libgdx.game' //生成java类根包名
+        packageCount = 20 //生成包数量
+        activityCountPerPackage = 3 //每个包下生成Activity类数量
+        excludeActivityJavaFile = false
+        //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+        otherCountPerPackage = 30  //每个包下生成其它类的数量
+        methodCountPerClass = 20  //每个类下生成方法数量
+        resPrefix = "zeiwe_"  //生成的layout、drawable、string等资源名前缀
+        drawableCount = 200  //生成drawable资源数量
+        stringCount = 200  //生成string数量
+      }
+    }
+  }
 }
 
 repositories {
@@ -105,11 +124,11 @@ tasks.register('copyAndroidNatives') {
 
     configurations.getByName("natives").copy().files.each { jar ->
       def outputDir = null
-      if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-      if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-      if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-      if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-      if(outputDir != null) {
+      if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+      if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+      if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+      if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+      if (outputDir != null) {
         copy {
           from zipTree(jar)
           into outputDir

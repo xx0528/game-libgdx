@@ -46,3 +46,7 @@
    boolean reportFixture(long);
    float   reportRayFixture(long, float, float, float, float, float);
 }
+
+
+#cn.hx.plugin.ui为前面配置的packageBase
+-keep class cn.hx.plugin.ui.** {*;}
