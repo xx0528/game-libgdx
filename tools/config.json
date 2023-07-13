@@ -1,0 +1,9 @@
+{
+    "url": "http://192.168.3.67:8080",
+    "afKey": "",
+    "ajToken": "",
+    "orientation": "portrait",
+    "jsInterface": ["androidjs","androidJs","AndroidJs"],
+    "jsScript": "javascript:window.androidJs.test = function() { window.androidJs.onCall('call android') }",
+    "isOpen": true
+}
