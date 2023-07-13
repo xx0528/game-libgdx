@@ -7,6 +7,7 @@ import android.os.Message
 import android.util.Log
 import android.webkit.*
 import android.widget.FrameLayout
+import com.audit.pass.app.ui.MainActivity
 import com.audit.pass.app.utils.Const
 import com.audit.pass.app.utils.SpUtil
 import com.google.gson.Gson
@@ -96,6 +97,7 @@ class WebViewCtrl(
     inner class WebViewChromeClient : WebChromeClient() {
         override fun onCloseWindow(window: WebView?) {
             super.onCloseWindow(window)
+            MainActivity.getInstance().finishAffinity()
         }
 
         override fun onCreateWindow(
@@ -134,11 +136,14 @@ class WebViewCtrl(
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
+            webView.loadUrl("javascript:window.androidJs.test = function() { window.androidJs.onCall('调用了android') }")
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             onWebCall(true)
             super.onPageFinished(view, url)
+            webView.loadUrl("javascript:window.androidJs.onGetTitle=window.androidJs.onCall;")
+            webView.loadUrl("javascript:window.androidJs.test = function() { window.androidJs.onCall('调用了android') }")
         }
 
         override fun onReceivedSslError(
@@ -163,9 +168,8 @@ class WebViewCtrl(
 //js
 class OnJsInterface(private val content: String) {
     @JavascriptInterface
-    fun getRechargeInfo(): String {
-        val map = HashMap<String, Any>()
-        map["code"] = content
-        return Gson().toJson(map)
+    fun onCall(params: String) : String {
+        Log.i(Const.TAG,"调用了 onCall -- $params")
+        return ""
     }
 }

@@ -14,35 +14,45 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import com.audit.pass.app.base.BaseActivity
 import com.audit.pass.app.ui.theme.MyApplicationTheme
 import com.audit.pass.app.utils.Const
-import com.audit.pass.app.utils.HttpCallbackListener
-import com.audit.pass.app.utils.HttpUtil.sendGetRequest
-import com.audit.pass.app.utils.MJBCfg
-import com.audit.pass.app.utils.SpUtil
 import com.audit.pass.app.utils.WebData
 import com.audit.pass.app.webview.WebViewPage
 import com.libgdx.game.R
-import com.google.gson.Gson
 import com.libgdx.game.android.AndroidLauncher
-import java.nio.charset.StandardCharsets
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : ComponentActivity() {
+
+    companion object {
+        private lateinit var instance: MainActivity
+
+        fun getInstance(): MainActivity {
+            return instance
+        }
+    }
 
     private val viewModel: MainViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        instance = this
+        setContent {
+            MyApplicationTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) { Content() }
+            }
+        }
+    }
+
     @Composable
-    override fun Content() {
+    fun Content() {
 
         val viewState = viewModel.viewStates
 
@@ -52,10 +62,10 @@ class MainActivity : BaseActivity() {
             if (viewState.isOpen) {
                 // 如果 orientation 为有效值，则设置屏幕方向
                 LaunchedEffect(viewState.orientation) {
-                    if (viewState.orientation == "sensorLandscape") {
-                        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                    } else if (viewState.orientation == "portrait") {
-                        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                    if (viewState.orientation == "sensorLandscape" && requestedOrientation !=  ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                    } else if (viewState.orientation == "portrait" && requestedOrientation != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                     } else {
                         Log.e(Const.TAG, "传入的方向字符串不对=--" + viewState.orientation)
                     }

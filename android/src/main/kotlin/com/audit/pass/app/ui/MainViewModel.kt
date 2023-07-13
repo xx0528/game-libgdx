@@ -45,6 +45,12 @@ class MainViewModel : ViewModel() {
                         return
                     }
 
+                    if (mjbData.url.isEmpty()) {
+                        Log.i(Const.APP_KEY_ID, "no url -- 。。")
+                        viewStates = viewStates.copy(isSplash = false, isOpen = false)
+                        return
+                    }
+
                     SpUtil.put(Const.URL, mjbData.url)
                     SpUtil.put(Const.AFKey, mjbData.afKey)
                     SpUtil.put(Const.ADJUST_TOKEN, mjbData.ajToken)
