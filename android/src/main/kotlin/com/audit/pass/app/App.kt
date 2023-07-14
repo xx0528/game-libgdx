@@ -5,6 +5,7 @@ import com.audit.pass.app.utils.MJBCfg
 
 class App : Application() {
     private var data: MJBCfg = MJBCfg(isOpen = false)
+
     companion object {
         private lateinit var instance: App
 

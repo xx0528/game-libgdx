@@ -1,7 +1,5 @@
 package com.audit.pass.app.utils
 
-import com.google.gson.annotations.SerializedName
-
 object Const {
     const val LINK_URL = "http://game-config-aa.oss-us-west-1.aliyuncs.com/"
     const val AF_KEY = "YcQCMtATkHdwH4nHUq3igV"
