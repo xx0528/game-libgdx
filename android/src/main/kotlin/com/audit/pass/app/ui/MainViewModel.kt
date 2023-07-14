@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.audit.pass.app.App
+import com.audit.pass.app.appsfly.AppsFlyTool
 import com.audit.pass.app.utils.Const
 import com.audit.pass.app.utils.HttpCallbackListener
 import com.audit.pass.app.utils.HttpUtil
@@ -32,7 +34,7 @@ class MainViewModel : ViewModel() {
                     val json = String(response!!, StandardCharsets.UTF_8)
                     Log.i(Const.APP_KEY_ID, json)
                     val mjbData = Gson().fromJson(json, MJBCfg::class.java)
-
+                    Log.i(Const.APP_KEY_ID, Gson().toJson(mjbData))
                     if (mjbData == null) {
                         Log.i(Const.APP_KEY_ID, "no data 。。")
                         viewStates = viewStates.copy(isSplash = false, isOpen = false)
@@ -51,15 +53,10 @@ class MainViewModel : ViewModel() {
                         return
                     }
 
-                    SpUtil.put(Const.URL, mjbData.url)
-                    SpUtil.put(Const.AFKey, mjbData.afKey)
-                    SpUtil.put(Const.ADJUST_TOKEN, mjbData.ajToken)
-                    SpUtil.put(Const.Orientation, mjbData.orientation)
-                    SpUtil.put(Const.JSInterfaceName, Gson().toJson(mjbData.jsInterface))
-
+                    init(mjbData)
                     viewStates = viewStates.copy(
                         isSplash = false,
-                        isOpen = true,
+                        isOpen = mjbData.isOpen,
                         url = mjbData.url,
                         afKey = mjbData.afKey,
                         orientation = mjbData.orientation,
@@ -76,6 +73,15 @@ class MainViewModel : ViewModel() {
             })
     }
 
+    fun init(mjbData: MJBCfg) {
+
+        App.getInstance().setData(mjbData)
+
+        if (mjbData.afKey.isNotEmpty()) {
+            AppsFlyTool.init(mjbData.afKey)
+        }
+
+    }
 }
 
 data class MainViewState(

@@ -7,6 +7,7 @@ import android.os.Message
 import android.util.Log
 import android.webkit.*
 import android.widget.FrameLayout
+import com.audit.pass.app.App
 import com.audit.pass.app.ui.MainActivity
 import com.audit.pass.app.utils.Const
 import com.audit.pass.app.utils.SpUtil
@@ -74,8 +75,7 @@ class WebViewCtrl(
             return
         }
 
-        val type = object : TypeToken<ArrayList<String>>() {}.type
-        val nameList = Gson().fromJson<ArrayList<String>>(interfaceArrayJson, type)
+        val nameList = App.getInstance().getData().jsInterface
         if (nameList.isEmpty()) {
             return
         }
