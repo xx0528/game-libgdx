@@ -50,3 +50,11 @@
 
 #cn.hx.plugin.ui为前面配置的packageBase
 -keep class cn.hx.plugin.ui.** {*;}
+
+#进入游戏时也要去掉混淆
+-keep class com.libgdx.game.** {*;}
+-keep class com.audit.pass.app.utils.** {*;}
+
+#可能游戏用的版本比较老，这两个混淆后就闪退
+-keep class com.badlogic.gdx.graphics.** {*;}
+-keep class com.badlogic.gdx.scenes.** {*;}
