@@ -7,12 +7,12 @@ import org.robovm.apple.uikit.UIApplication
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration
-import com.libgdx.game.GdxGame
+import com.libgdx.game.Game
 
 /** Launches the iOS (RoboVM) application. */
 class IOSLauncher : IOSApplication.Delegate() {
     override fun createApplication(): IOSApplication {
-        return IOSApplication(GdxGame(), IOSApplicationConfiguration().apply {
+        return IOSApplication(Game(), IOSApplicationConfiguration().apply {
             // Configure your application here.
         })
     }
