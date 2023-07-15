@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.audit.pass.app.App
+import com.audit.pass.app.adjust.AdJustTool
 import com.audit.pass.app.appsfly.AppsFlyTool
 import com.audit.pass.app.utils.Const
 import com.audit.pass.app.utils.HttpCallbackListener
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (mjbData.ajToken.isNotEmpty()) {
-
+            AdJustTool.init(mjbData.ajToken)
         }
 
         val intent = Intent(this, WebActivity::class.java)

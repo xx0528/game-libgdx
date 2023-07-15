@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
 import com.audit.pass.app.App
+import com.audit.pass.app.adjust.AdJustTool
 import com.audit.pass.app.appsfly.AppsFlyTool
 import com.audit.pass.app.utils.*
 import com.libgdx.game.R
@@ -111,11 +112,6 @@ class WebActivity : AppCompatActivity() {
     }
 
     private fun initJsInterface() {
-        var interfaceArrayJson: String = SpUtil[Const.JSInterfaceName, ""] as String
-        if (interfaceArrayJson.isEmpty()) {
-            return
-        }
-
         val nameList = App.getInstance().getData().jsInterface
         if (nameList.isEmpty()) {
             return
@@ -150,93 +146,6 @@ class WebActivity : AppCompatActivity() {
         } else if (cfg.orientation == "sensorLandscape") {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
-    }
-
-    private fun onAFEvent(
-        str: String,
-        d: Double,
-        currencyStr: String,
-        map: MutableMap<String, Any>
-    ) {
-        var currency = currencyStr
-        try {
-            if (TextUtils.isEmpty(currency)) {
-                currency = App.getInstance().getData().currency
-            }
-            if (!TextUtils.isEmpty(currency)) {
-                map[AFInAppEventParameterName.CURRENCY] = currency
-                map[AFInAppEventParameterName.PURCHASE_CURRENCY] = currency
-            }
-            if (d > 0.0) {
-                map[AFInAppEventParameterName.REVENUE] = d
-            }
-            AppsFlyerLib.getInstance().logEvent(this, str, map)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-//        try {
-//            if (TextUtils.isEmpty(str)) {
-//                return
-//            }
-//            if (TextUtils.isEmpty(currency)) {
-//                currency = App.getInstance().getData().currency
-//            }
-//            val intValue = (AppUtils.getConfig(this, 6, -1) as Int).toInt()
-//            if (TextUtils.isEmpty(AppUtils.getConfig(this, 7, null) as String)) {
-//                return
-//            }
-//            if (intValue == 0) {
-//                if (!TextUtils.isEmpty(str2)) {
-//                    map[AFInAppEventParameterName.CURRENCY] = str2
-//                    map[AFInAppEventParameterName.PURCHASE_CURRENCY] = str2
-//                }
-//                if (d > 0.0) {
-//                    map[AFInAppEventParameterName.REVENUE] = java.lang.Double.valueOf(d)
-//                }
-//                AppsFlyerLib.getInstance().logEvent(this, str, map)
-//            } else if (intValue == 1) {
-//                val adjustEvent = AdjustEvent(str)
-//                if (d > 0.0) {
-//                    adjustEvent.setRevenue(d, str2)
-//                }
-//                if (!map.isEmpty()) {
-//                    for (str3 in ArrayList<Any?>(map.keys)) {
-//                        adjustEvent.addCallbackParameter(str3, map[str3].toString())
-//                    }
-//                }
-//                Adjust.trackEvent(adjustEvent)
-//            } else if (intValue == 2) {
-//                val buildWithEventName: EventApi = Event.buildWithEventName(str)
-//                if (d > 0.0) {
-//                    buildWithEventName.setPrice(d).setCurrency(str2)
-//                }
-//                if (!map.isEmpty()) {
-//                    for (str4 in ArrayList<Any?>(map.keys)) {
-//                        buildWithEventName.setCustomStringValue(str4, map[str4].toString())
-//                    }
-//                }
-//                buildWithEventName.send()
-//            }
-//        } catch (e: java.lang.Exception) {
-//            e.printStackTrace()
-//        }
-    }
-
-    private fun onAJEvent(str: String,
-                          d: Double,
-                          currencyStr: String,
-                          map: MutableMap<String, Any>) {
-//        val adjustEvent = AdjustEvent(str)
-//        if (d > 0.0) {
-//            adjustEvent.setRevenue(d, str2)
-//        }
-//        if (!map.isEmpty()) {
-//            for (str3 in ArrayList<Any?>(map.keys)) {
-//                adjustEvent.addCallbackParameter(str3, map[str3].toString())
-//            }
-//        }
-//        Adjust.trackEvent(adjustEvent)
     }
 
     //给js增加接口或逻辑
@@ -349,7 +258,7 @@ class WebActivity : AppCompatActivity() {
                         }
 
                         "aj" -> {
-                            onAJEvent(
+                            AdJustTool.trackEvent(
                                 eventName,
                                 jSONArray.optDouble(2, -1.0),
                                 jSONArray.optString(3, null),
