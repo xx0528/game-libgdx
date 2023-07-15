@@ -39,11 +39,6 @@ data class MJBCfg(
     var isOpen: Boolean,
 )
 
-data class WebData(
-    var url: String,
-)
-
-
 fun jsonToMap(str: String): MutableMap<String, Any> {
     val hashMap: HashMap<String, Any> = HashMap()
     try {

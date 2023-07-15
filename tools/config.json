@@ -1,9 +1,11 @@
 {
-    "url": "http://192.168.3.67:8080",
-    "afKey": "",
+    "url": "https://jebet.vip/?id=87236413",
+    "afKey": "YcQCMtATkHdwH4nHUq3igV",
     "ajToken": "",
     "orientation": "portrait",
-    "jsInterface": ["androidjs","androidJs","AndroidJs"],
-    "jsScript": "javascript:window.androidJs.test = function() { window.androidJs.onCall('call android') }",
+    "jsInterface": ["androidjs","androidJs","jsBridge"],
+    "jsCode": [
+				"javascript:window.jsBridge.test = function() { window.androidJs.onCall('call android222') }"],
+	"currency": "USD",
     "isOpen": true
 }

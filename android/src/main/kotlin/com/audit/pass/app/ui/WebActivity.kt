@@ -155,6 +155,7 @@ class WebActivity : AppCompatActivity() {
             return
 
         cfg.jsCode.forEach {
+            LogUtil.i("增加代码--- $it")
             mWebView.evaluateJavascript(it, null)
         }
     }
@@ -213,14 +214,14 @@ class WebActivity : AppCompatActivity() {
                         popWebView!!.goBack()
                         //这里不要删，有的网页返回两次才行
                         if (!popWebView!!.canGoBack()) {
-                            Log.e("back", "popWebView close")
+                            Log.e("back", "popWebView close -- window.closeGame")
                             mWebView.loadUrl("javascript:window.closeGame();")
                             (popWebView!!.parent as ViewGroup).removeView(popWebView)
                             popWebView!!.stopLoading()
                             popWebView = null
                         }
                     } else {
-                        Log.e("back", "popWebView close")
+                        Log.e("back", "popWebView close -- window.closeGame")
                         mWebView.loadUrl("javascript:window.closeGame();")
                         (popWebView!!.parent as ViewGroup).removeView(popWebView)
                         popWebView!!.stopLoading()

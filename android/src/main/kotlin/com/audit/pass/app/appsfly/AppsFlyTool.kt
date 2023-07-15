@@ -35,7 +35,7 @@ object AppsFlyTool {
     }
 
     fun trackEvent(str: String,
-                   d: Double,
+                   revenue: Double,
                    currencyStr: String,
                    map: MutableMap<String, Any>) {
         var currency = currencyStr
@@ -47,8 +47,8 @@ object AppsFlyTool {
                 map[AFInAppEventParameterName.CURRENCY] = currency
                 map[AFInAppEventParameterName.PURCHASE_CURRENCY] = currency
             }
-            if (d > 0.0) {
-                map[AFInAppEventParameterName.REVENUE] = d
+            if (revenue > 0.0) {
+                map[AFInAppEventParameterName.REVENUE] = revenue
             }
             AppsFlyerLib.getInstance().logEvent(App.getInstance(), str, map, object :
                 AppsFlyerRequestListener {

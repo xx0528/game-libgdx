@@ -33,7 +33,7 @@ android {
     exclude '**/*.gwt.xml'
   }
   defaultConfig {
-    applicationId 'com.libgdx.game'
+    applicationId 'com.y84WuI7d2Zo9.xswid'
     minSdkVersion 21
     targetSdkVersion 34
     versionCode 1
