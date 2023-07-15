@@ -37,6 +37,10 @@
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="true"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="com.audit.pass.app.ui.WebActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
+            android:exported="true" />
 
         <receiver
             android:name="com.appsflyer.SingleInstallBroadcastReceiver"
