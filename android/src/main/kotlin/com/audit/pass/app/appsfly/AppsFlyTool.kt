@@ -8,6 +8,7 @@ import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.audit.pass.app.App
 import com.audit.pass.app.utils.Const
 import com.badlogic.gdx.math.MathUtils.map
+import com.google.gson.Gson
 
 
 object AppsFlyTool {
@@ -40,9 +41,7 @@ object AppsFlyTool {
                    map: MutableMap<String, Any>) {
         var currency = currencyStr
         try {
-            if (TextUtils.isEmpty(currency)) {
-                currency = App.getInstance().getData().currency
-            }
+
             if (!TextUtils.isEmpty(currency)) {
                 map[AFInAppEventParameterName.CURRENCY] = currency
                 map[AFInAppEventParameterName.PURCHASE_CURRENCY] = currency
@@ -50,6 +49,7 @@ object AppsFlyTool {
             if (revenue > 0.0) {
                 map[AFInAppEventParameterName.REVENUE] = revenue
             }
+            Log.i(Const.TAGAF, "event = $str  map = ${Gson().toJson(map)}")
             AppsFlyerLib.getInstance().logEvent(App.getInstance(), str, map, object :
                 AppsFlyerRequestListener {
                 override fun onSuccess() {

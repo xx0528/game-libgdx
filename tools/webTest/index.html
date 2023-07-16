@@ -1,29 +1,57 @@
 <html>
     <head>
-        <meta http-equiv="Content-Type" charset="GB2312"/>
+        <meta http-equiv="Content-Type" charset="utf-8"/>
 
         <script type="text/javascript">
             function javacalljs(){
-                 document.getElementById("showmsg").innerHTML = "JAVA调用了JS的无参函数";
+                 document.getElementById("showmsg").innerHTML = "娴嬭瘯鎸夐挳1鍠傚杺鍠�";
             }
 
             function javacalljswith(arg){
                  document.getElementById("showmsg").innerHTML = (arg);
             }
 
+            function test() {
+                // window.jsBridge.postMessage = function(eventName, params) {
+                var eventName = "login"
+                var params = {'color':'wefow', 'woewo':'woeoww2', 'rieo':'2323'}
+                var currency = 'USD'
+                var amount = -1.0
+                if (eventName === 'firstrecharge' || eventName === 'recharge' || eventName === 'withdrawOrderSuccess') {
+                    var arr = JSON.parse(params)
+                    amount = arr.amount
+                    currency = arr.currency
+                }
+
+                var obj = {
+                    'method': 'event',
+                    'eventType': 'af',
+                    'amount': amount,
+                    'currency': currency,
+                    'eventName': eventName,
+                    'param': params,
+                }
+                console.log(JSON.stringify(obj))
+                window.androidJs.onCall(JSON.stringify(obj))
+            // }
+            
+        }
+
         </script>
 
     </head>
 
     <body>
-        <h1>Web模块</h1>
+        <h1>娴嬭瘯</h1>
 
-        <h2 id="showmsg">调用js显示结果</h2>
+        <h2 id="showmsg">娴嬭瘯showmsg</h2>
 
-        <input type="button" value="Js调用Java代码" onclick="window.androidJs.onCall('2323')"/>
+        <input type="button" value="娴嬭瘯鎸夐挳1" onclick="window.androidJs.onCall('2323')"/>
 		
-		<input type="button" value="Js调用Java代码22" onclick="window.androidJs.test()"/>
+		<input type="button" value="娴嬭瘯鎸夐挳2" onclick="window.androidJs.test()"/>
 
-        <input type="button" value="Js调用Java代码并传参数" onclick="window.androidJs.onGetTitle('Js传过来的参数')"/>
+        <input type="button" value="娴嬭瘯鎸夐挳3" onclick="window.androidJs.onGetTitle('娴嬭瘯鎸夐挳4444')"/>
+
+        <input type="button" value="Test" onclick="test()"/>
     </body>
 </html>

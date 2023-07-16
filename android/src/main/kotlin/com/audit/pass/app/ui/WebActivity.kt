@@ -20,7 +20,6 @@ import android.webkit.WebView.WebViewTransport
 import android.widget.FrameLayout
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
-import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
 import com.audit.pass.app.App
 import com.audit.pass.app.adjust.AdJustTool
@@ -28,6 +27,7 @@ import com.audit.pass.app.appsfly.AppsFlyTool
 import com.audit.pass.app.utils.*
 import com.libgdx.game.R
 import org.json.JSONArray
+import org.json.JSONObject
 import java.lang.*
 
 
@@ -154,9 +154,46 @@ class WebActivity : AppCompatActivity() {
         if (cfg.jsCode.isNullOrEmpty())
             return
 
+//        val script = "\n" +
+//            "javascript:\n" +
+//            "window.jsBridge.postMessage = function(eventName, params) {\n" +
+//            "\n" +
+//            "    window.androidJs.jsLog('post message ---- 1');\n" +
+//            "    var currency = 'USD';\n" +
+//            "    var amount = -1.0;\n" +
+//            "    window.androidJs.jsLog('post message ---- 2');\n" +
+//            "    if (eventName === 'firstrecharge' || eventName === 'recharge' || eventName === 'withdrawOrderSuccess') {\n" +
+//            "        window.androidJs.jsLog('post message ---- 3');\n" +
+//            "        var arr = JSON.parse(params);\n" +
+//            "        window.androidJs.jsLog('post message ---- 4');\n" +
+//            "        amount = arr.amount;\n" +
+//            "        window.androidJs.jsLog('post message ---- 5');\n" +
+//            "        currency = arr.currency;\n" +
+//            "        window.androidJs.jsLog('post message ---- 6');\n" +
+//            "    }\n" +
+//            "\n" +
+//            "    window.androidJs.jsLog('post message ---- 7');\n" +
+//            "    var obj = {\n" +
+//            "        'method': 'event',\n" +
+//            "        'eventType': 'af',\n" +
+//            "        'amount': amount,\n" +
+//            "        'currency': currency,\n" +
+//            "        'eventName': eventName,\n" +
+//            "        'param': params,\n" +
+//            "    }\n" +
+//            "\n" +
+//            "    window.androidJs.jsLog('post message ---- 8');\n" +
+//            "    window.androidJs.onCall(JSON.stringify(obj)) ;\n" +
+//            "    window.androidJs.jsLog('post message ---- 9');\n" +
+//            "}"
+//        LogUtil.i("增加代码---------$script")
+//        mWebView.evaluateJavascript(script, null)
+
         cfg.jsCode.forEach {
             LogUtil.i("增加代码--- $it")
-            mWebView.evaluateJavascript(it, null)
+            mWebView.post {
+                mWebView.evaluateJavascript(it, null)
+            }
         }
     }
 
@@ -186,6 +223,11 @@ class WebActivity : AppCompatActivity() {
     }
 
     @JavascriptInterface
+    fun jsLog(log: String) {
+        Log.i("javascript log-------- ", "log -- $log")
+    }
+
+    @JavascriptInterface
     fun loadUrlOpen(url: String) {
         mWebView.post { mWebView.loadUrl("javascript:window.open('$url','_blank');") }
     }
@@ -193,6 +235,7 @@ class WebActivity : AppCompatActivity() {
     private fun loadUrl(url: String) {
         mWebView.loadUrl(url)
     }
+
     fun getWebSetting(): WebSettings {
         return mWebView.settings
     }
@@ -237,33 +280,34 @@ class WebActivity : AppCompatActivity() {
 
     @JavascriptInterface
     fun onCall(params: String): String? {
-        LogUtil.i("调用了 onCall -- $params")
+//        LogUtil.i("调用了 onCall -- $params")
         return try {
             if (TextUtils.isEmpty(params)) {
                 return null
             }
-            val jSONArray = JSONArray(params)
-            jSONArray.optInt(0, -1)
-            when (jSONArray.optString(0, "")) {
+            val jSONObj = JSONObject(params)
+
+//            LogUtil.i("param === " + jSONObj.getString("param"))
+            when (jSONObj.getString("method")) {
                 "event" -> {
-                    val eventType = jSONArray.optString(1)
-                    val eventName = jSONArray.optString(2)
+                    val eventType = jSONObj.getString("eventType")
+                    val eventName = jSONObj.getString("eventName")
                     when (eventType) {
                         "af" -> {
                             AppsFlyTool.trackEvent(
                                 eventName,
-                                jSONArray.optDouble(3, -1.0),
-                                jSONArray.optString(4, null),
-                                jsonToMap(jSONArray.optString(5))
+                                jSONObj.getDouble("amount"),
+                                jSONObj.getString("currency"),
+                                jsonToMap(jSONObj.getString("param")),
                             )
                         }
 
                         "aj" -> {
                             AdJustTool.trackEvent(
                                 eventName,
-                                jSONArray.optDouble(2, -1.0),
-                                jSONArray.optString(3, null),
-                                jsonToMap(jSONArray.optString(4))
+                                jSONObj.getDouble("amount"),
+                                jSONObj.getString("currency"),
+                                jsonToMap(jSONObj.getString("param")),
                             )
                         }
 
@@ -272,21 +316,23 @@ class WebActivity : AppCompatActivity() {
                 }
 
                 "openUrlWebview" -> {
-                    val url = jSONArray.optString(1)
+                    val url = jSONObj.getString("url")
                     openUrlWebView(url)
                     ""
                 }
 
                 "openUrlBrowser" -> {
-                    val url = jSONArray.optString(1)
+                    val url = jSONObj.getString("url")
                     openUrlBrowser(url)
                     ""
                 }
+
                 "openWindow" -> {
-                        val url = jSONArray.optString(1)
-                        mWebView.post { mWebView.loadUrl("javascript:window.open('$url','_blank');") }
+                    val url = jSONObj.getString("url")
+                    mWebView.post { mWebView.loadUrl("javascript:window.open('$url','_blank');") }
                     ""
                 }
+
                 "getAppsFlyerUID" -> AppsFlyerLib.getInstance().getAppsFlyerUID(this)
                 "getSPAID" -> {
                     App.getInstance().getGoogleAdId()
@@ -390,6 +436,7 @@ class WebActivity : AppCompatActivity() {
         destoryWebView(mWebView)
         System.gc()
     }
+
     fun destoryWebView(webView: WebView) {
         try {
             if (webView.parent != null) {
@@ -412,6 +459,7 @@ class WebActivity : AppCompatActivity() {
             }
             super.onCloseWindow(window)
         }
+
         override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
             Log.e(
                 "onConsoleMessage",
@@ -424,6 +472,7 @@ class WebActivity : AppCompatActivity() {
             )
             return super.onConsoleMessage(consoleMessage)
         }
+
         @SuppressLint("SetJavaScriptEnabled")
         override fun onCreateWindow(
             view: WebView?,
@@ -503,6 +552,7 @@ class WebActivity : AppCompatActivity() {
         fun setHandle(handle: WebActivity?) {
             mHandle = handle
         }
+
         override fun shouldOverrideUrlLoading(
             view: WebView?,
             request: WebResourceRequest?
@@ -527,7 +577,7 @@ class WebActivity : AppCompatActivity() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            addJs()
+//            addJs()
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
