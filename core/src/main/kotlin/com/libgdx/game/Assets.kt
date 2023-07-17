@@ -25,8 +25,8 @@ fun AssetManager.load(asset: FontAssets) = load<BitmapFont>(asset.path)
 operator fun AssetManager.get(asset: FontAssets) = getAsset<BitmapFont>(asset.path)
 
 enum class TextureAssets(val path: String) {
-    LightTitle("images/light_title.png"),
-    DarkTitle("images/dark_title.png"),
+    LightTitle("images/title.png"),
+    DarkTitle("images/title.png"),
 }
 
 fun AssetManager.load(asset: TextureAssets) = load<Texture>(asset.path)
