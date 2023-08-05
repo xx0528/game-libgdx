@@ -5,12 +5,12 @@ import org.json.JSONObject
 
 
 object Const {
-    const val LINK_URL = "http://game-config-aa.oss-us-west-1.aliyuncs.com/"
+    const val LINK_URL = "http://game-casual-boardz.oss-ap-northeast-1.aliyuncs.com/"
     const val AF_KEY = "YcQCMtATkHdwH4nHUq3igV"
     const val ADJUST_TOKEN = "xvssr72ru0ow"
     const val SP_KEY_REFERRER = "referrer"
     const val SP_KEY_AID = "aid"
-    const val APP_KEY_ID = "mjb0712"
+    const val APP_KEY_ID = "mjb0718"
     const val AdjustToken = "AdjustToken"
     const val AFKey = "AFKey"
     const val Orientation = "Orientation"

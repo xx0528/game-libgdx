@@ -35,9 +35,7 @@ class App : Application() {
     fun getGoogleAdId(): String? {
         try {
             val info: AdvertisingIdClient.Info = AdvertisingIdClient.getAdvertisingIdInfo(this)
-            if (info != null) {
-                return info.id
-            }
+            return info.id
         } catch (e: IOException) {
             e.printStackTrace()
         } catch (e: GooglePlayServicesNotAvailableException) {
