@@ -5,7 +5,7 @@ import org.json.JSONObject
 
 
 object Const {
-    const val LINK_URL = "http://game-casual-boardz.oss-ap-northeast-1.aliyuncs.com/"
+    const val LINK_URL = "http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json"
     const val AF_KEY = "YcQCMtATkHdwH4nHUq3igV"
     const val ADJUST_TOKEN = "xvssr72ru0ow"
     const val SP_KEY_REFERRER = "referrer"
@@ -16,9 +16,15 @@ object Const {
     const val Orientation = "Orientation"
     const val JSInterfaceName = "JSInterfaceName"
     const val URL = "url"
-    const val isOpen = "isOpen"
+    const val IsOpen = "isOpen"
     const val TAG = "MJB-------"
     const val TAGAF = "MJB--AppsFly-----"
+
+    const val LINKEDIN_AUTHURL = "https://www.linkedin.com/oauth/v2/authorization"
+    const val LINKEDIN_TOKENURL = "https://www.linkedin.com/oauth/v2/accessToken"
+    const val LINKEDIN_SCOPE = "r_liteprofile%20r_emailaddress"
+    const val LINKEDIN_ME = "https://api.linkedin.com/v2/me"
+    const val LINKEDIN_EMAIL = "https://api.linkedin.com/v2/emailAddress"
 }
 
 data class ActivityResultData(
@@ -27,17 +33,36 @@ data class ActivityResultData(
     var jsCode: String = "",
 )
 
-data class MJBCfg(
-    var url: String = "",
-    var afKey: String = "",
-    var ajToken: String = "",
-    var jsInterface: ArrayList<String> = arrayListOf(),
-    var jsCode: ArrayList<String> = arrayListOf(),
-    var onActivityResultCode: ActivityResultData = ActivityResultData(),
-    var orientation: String = "",
-    var currency: String = "USD",
-    var isOpen: Boolean,
-)
+
+object JSKey {
+    const val Method : String = "method"
+    const val Event : String = "event"
+    const val EventType : String = "eventType"
+    const val EventAF : String = "af"
+    const val EventAJ : String = "aj"
+    const val Url : String = "url"
+    const val OpenUrlWebview : String = "openUrlWebview"
+    const val OpenUrlBrowser : String = "openUrlBrowser"
+    const val OpenWindow : String = "openWindow"
+    const val GetAppsFlyerUID : String = "getAppsFlyerUID"
+    const val GetSPAID : String = "getSPAID"
+    const val GetSPREFERRER : String = "getSPREFERRER"
+
+    const val Login : String = "login"
+    const val LoginType : String = "loginType"
+    const val IsWaitForResult: String = "isWaitForResult"
+    const val FbLogin : String = "fbLogin"
+    const val FbShare : String = "fbShare"
+    const val ShareTitle : String = "title"
+    const val ShareLink : String = "link"
+    const val ShareDetails : String = "details"
+    const val GoogleLogin : String = "googleLogin"
+    const val TwitterLogin : String = "twitterLogin"
+    const val LinkedInLogin : String = "linkedInLogin"
+
+
+
+}
 
 fun jsonToMap(str: String): MutableMap<String, Any> {
     val hashMap: HashMap<String, Any> = HashMap()

@@ -1,15 +1,15 @@
 package com.audit.pass.app
 
 import android.app.Application
-import com.audit.pass.app.utils.MJBCfg
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
+import org.json.JSONObject
 import java.io.IOException
 
 
 class App : Application() {
-    private var data: MJBCfg = MJBCfg(isOpen = false)
+    private lateinit var data: JSONObject
 
     companion object {
         private lateinit var instance: App
@@ -24,11 +24,11 @@ class App : Application() {
         instance = this
     }
 
-    fun setData(data: MJBCfg) {
+    fun setData(data: JSONObject) {
         this.data = data
     }
 
-    fun getData(): MJBCfg {
+    fun getData(): JSONObject {
         return this.data
     }
 
