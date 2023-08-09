@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'android-junk-code'
+apply plugin: 'xml-class-guard'
 
 android {
   compileSdk 34
@@ -72,6 +73,28 @@ android {
       }
     }
   }
+
+
+  //以下均为非必须
+  xmlClassGuard {
+    /*
+    * 是否查找约束布局的constraint_referenced_ids属性的值，并添加到AabResGuard的白名单中，
+    * 是的话，要求你在XmlClassGuard前依赖AabResGuard插件，默认false
+    */
+    findAabConstraintReferencedIds = false
+
+    /*
+    * 是否查找约束布局的constraint_referenced_ids属性的值，并添加到AndResGuard的白名单中，
+    * 是的话，要求你在XmlClassGuard前依赖AndResGuard插件，默认false
+    */
+    findAndConstraintReferencedIds = false
+    //用于增量混淆的 mapping 文件
+    mappingFile = file("xml-class-mapping.txt")
+    //更改manifest文件的package属性，即包名
+    packageChange = ["com.ljx.example": "ab.cd"]
+    //移动目录
+    moveDir = ["com.vest.bag": "sw.ef.gh"]
+  }
 }
 
 repositories {
@@ -107,15 +130,6 @@ dependencies {
   implementation platform('com.google.firebase:firebase-bom:31.5.0')
   implementation 'com.google.firebase:firebase-analytics-ktx'
   implementation 'com.google.firebase:firebase-auth-ktx'
-
-  //Google Login SDK
-  implementation ('com.google.api-client:google-api-client:2.0.0'){
-    exclude group: 'xpp3', module: 'xpp3'
-    exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    exclude group: 'junit', module: 'junit'
-    exclude group: 'com.google.android', module: 'android'
-  }
-  implementation 'com.google.api-client:google-api-client-android:2.0.0'
 
   //Facebook Login SDK
   implementation 'com.facebook.android:facebook-android-sdk:[8,9)'

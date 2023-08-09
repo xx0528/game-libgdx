@@ -37,10 +37,6 @@ object LoginTool {
             facebookLoginClient = FacebookLoginClientFactory().create(activity)
         }
 
-        if (data.getBoolean(JSKey.GoogleLogin)) {
-            googleLoginClient = GoogleLoginClientFactory().create(activity)
-        }
-
         if (data.getBoolean(JSKey.TwitterLogin)) {
             twitterLoginClient = TwitterLoginClientFactory().create(activity)
         }
