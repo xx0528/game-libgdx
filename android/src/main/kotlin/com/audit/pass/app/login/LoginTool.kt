@@ -44,8 +44,6 @@ object LoginTool {
         if (data.getBoolean(JSKey.LinkedInLogin)) {
             linkedInLoginClient = LinkedInLoginClientFactory().create(activity)
         }
-        //默认使用谷歌原生方案
-        //googleLoginClient = GoogleFirebaseLoginClientFactory().create(activity)
     }
 
     fun login(context: WebActivity, loginType: LoginType, isWaitForResult: Boolean = true) : String {
