@@ -1,10 +1,10 @@
-export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/21.0.6113669
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/25.1.8937393
 ###
  # @Author: xx
  # @Date: 2023-08-11 18:38:46
  # @LastEditTime: 2023-08-11 19:37:27
- # @Description: 
-### 
+ # @Description:
+###
 
 export GOARCH=arm
 export GOOS=android

@@ -74,6 +74,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
+extern GoString get_data();
 extern GoInt add(GoInt x, GoInt y);
 extern GoInt remove_int(GoInt x, GoInt y);
 

@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         setFullWindow(this)
         setContentView(R.layout.activity_main)
 
+        log("come from add jni ${JniLibrary.getData()}")
+
         log("come from add jni ${JniLibrary.add(300, 150)}")
 
         log("come from remove jni ${JniLibrary.remove(300, 150)}")
