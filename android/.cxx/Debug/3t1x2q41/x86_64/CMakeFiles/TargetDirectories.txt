@@ -1,0 +1,3 @@
+D:/Work/game-libgdx/android/.cxx/Debug/3t1x2q41/x86_64/CMakeFiles/my_jni.dir
+D:/Work/game-libgdx/android/.cxx/Debug/3t1x2q41/x86_64/CMakeFiles/edit_cache.dir
+D:/Work/game-libgdx/android/.cxx/Debug/3t1x2q41/x86_64/CMakeFiles/rebuild_cache.dir

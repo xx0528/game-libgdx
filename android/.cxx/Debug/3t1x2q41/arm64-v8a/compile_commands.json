@@ -1,0 +1,7 @@
+[
+{
+  "directory": "D:/Work/game-libgdx/android/.cxx/Debug/3t1x2q41/arm64-v8a",
+  "command": "D:\\AndroidSdk\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe --target=aarch64-none-linux-android21 --gcc-toolchain=D:/AndroidSdk/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=D:/AndroidSdk/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dmy_jni_EXPORTS -ID:/Work/game-libgdx/android/../go/output/android/arm64-v8a -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles\\my_jni.dir\\src\\main\\jni\\jni.c.o -c D:\\Work\\game-libgdx\\android\\src\\main\\jni\\jni.c",
+  "file": "D:\\Work\\game-libgdx\\android\\src\\main\\jni\\jni.c"
+}
+]

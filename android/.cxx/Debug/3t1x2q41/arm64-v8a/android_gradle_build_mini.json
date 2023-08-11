@@ -1,0 +1,30 @@
+{
+  "buildFiles": [
+    "D:\\Work\\game-libgdx\\android\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "D:\\AndroidSdk\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "D:\\Work\\game-libgdx\\android\\.cxx\\Debug\\3t1x2q41\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "D:\\AndroidSdk\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "D:\\Work\\game-libgdx\\android\\.cxx\\Debug\\3t1x2q41\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "my_jni::@6890427a1f51a3e7e1df": {
+      "artifactName": "my_jni",
+      "abi": "arm64-v8a",
+      "output": "D:\\Work\\game-libgdx\\android\\build\\intermediates\\cxx\\Debug\\3t1x2q41\\obj\\arm64-v8a\\libmy_jni.so",
+      "runtimeFiles": [
+        "D:\\AndroidSdk\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\sysroot\\usr\\lib\\aarch64-linux-android\\21\\libandroid.so",
+        "D:\\Work\\game-libgdx\\android\\libs\\arm64-v8a\\libgdx.so"
+      ]
+    }
+  }
+}

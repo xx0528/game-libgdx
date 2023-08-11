@@ -40,6 +40,16 @@ android {
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
+
+    externalNativeBuild {
+      cmake {
+        cppFlags ""
+      }
+      ndk {
+        abiFilters "armeabi-v7a", "arm64-v8a" //, "armeabi"
+//                abiFilters "arm64-v8a"
+      }
+    }
   }
   namespace "com.libgdx.game"
   compileOptions {
@@ -95,6 +105,13 @@ android {
     //移动目录
     moveDir = ["com.vest.bag": "sw.ef.gh"]
   }
+
+  externalNativeBuild {
+    cmake {
+      path 'CMakeLists.txt'
+    }
+  }
+  ndkVersion '21.0.6113669'
 }
 
 repositories {

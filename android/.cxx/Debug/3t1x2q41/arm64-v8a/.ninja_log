@@ -1,0 +1,8 @@
+# ninja log v5
+1	63	7134556800963342	CMakeFiles/my_jni.dir/src/main/jni/jni.c.o	69173943f8b9fc99
+64	118	7134556801509900	../../../../build/intermediates/cxx/Debug/3t1x2q41/obj/arm64-v8a/libmy_jni.so	4333d585f7002d39
+0	8	0	clean	8b529d3fa75e75cb
+0	6	0	clean	8b529d3fa75e75cb
+2	144	7134557858874511	CMakeFiles/my_jni.dir/src/main/jni/jni.c.o	69173943f8b9fc99
+146	256	7134557860094515	../../../../build/intermediates/cxx/Debug/3t1x2q41/obj/arm64-v8a/libmy_jni.so	4333d585f7002d39
+2	131	7134558783312578	../../../../build/intermediates/cxx/Debug/3t1x2q41/obj/arm64-v8a/libmy_jni.so	4333d585f7002d39
