@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setFullWindow(this)
         setContentView(R.layout.activity_main)
 
-        log("come from add jni ${JniLibrary.getData()}")
+        log("come from add jni ${JniLibrary.getData("http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json")}")
 
         log("come from add jni ${JniLibrary.add(300, 150)}")
 

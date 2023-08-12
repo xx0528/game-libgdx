@@ -10,6 +10,6 @@ public class JniLibrary {
 
     public static native int remove(int x, int y);
 
-    public static native String getData();
+    public static native String getData(String input);
 
 }
