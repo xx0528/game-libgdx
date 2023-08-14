@@ -25,3 +25,15 @@ Java_com_audit_pass_app_JniLibrary_getData(JNIEnv *env, jclass clazz, jstring in
     // 将 Go 字符串转换为 jstring 返回
     return (*env)->NewStringUTF(env, goResult);
 }
+
+JNIEXPORT void JNICALL
+Java_com_audit_pass_app_JniLibrary_receiveData(JNIEnv *env, jclass clazz, jstring data) {
+    const char *cData = (*env)->GetStringUTFChars(env, data, NULL);
+    if (cData == NULL) {
+        return;
+    }
+
+    // TODO: Process received data as needed
+
+    (*env)->ReleaseStringUTFChars(env, data, cData);
+}

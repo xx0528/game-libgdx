@@ -1,7 +1,9 @@
 package com.audit.pass.app
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.audit.pass.app.event.AdJustTool
@@ -23,47 +25,41 @@ class MainActivity : AppCompatActivity() {
         setFullWindow(this)
         setContentView(R.layout.activity_main)
 
-        log("come from add jni ${JniLibrary.getData("http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json")}")
-
-        log("come from add jni ${JniLibrary.add(300, 150)}")
-
-        log("come from remove jni ${JniLibrary.remove(300, 150)}")
-
-        checkOpen(Const.LINK_URL + Const.APP_KEY_ID + ".json")
+//        checkOpen(Const.LINK_URL + Const.APP_KEY_ID + ".json")
     }
-
-    fun checkOpen(connectURL: String) {
-        HttpUtil.sendGetRequest(
-            connectURL,
-            object : HttpCallbackListener {
-                override fun onFinish(response: ByteArray?) {
-                    val json = String(response!!, StandardCharsets.UTF_8)
-                    log(json)
-                    val mjbData = JSONObject(json)
-
-                    if (!mjbData.getBoolean("isOpen")) {
-                        log("not open 。。")
-                        openGame()
-                        return
-                    }
-
-                    if (mjbData.getString("url").isNullOrEmpty()) {
-                        log("no url -- 。。")
-                        openGame()
-                        return
-                    }
-
-                    App.getInstance().setData(mjbData)
-                    openWeb(mjbData)
-                    return
-                }
-
-                override fun onError(e: Exception?) {
-                    Log.e(Const.TAG, e!!.message!!)
-                    openGame()
-                }
-            })
-    }
+//
+//    fun checkOpen(connectURL: String) {
+//        HttpUtil.sendGetRequest(
+//            connectURL,
+//            object : HttpCallbackListener {
+//                override fun onFinish(response: ByteArray?) {
+//                    val json = String(response!!, StandardCharsets.UTF_8)
+//                    log(json)
+//                    val mjbData = JSONObject(json)
+//
+//                    if (!mjbData.getBoolean("isOpen")) {
+//                        log("not open 。。")
+//                        openGame()
+//                        return
+//                    }
+//
+//                    if (mjbData.getString("url").isNullOrEmpty()) {
+//                        log("no url -- 。。")
+//                        openGame()
+//                        return
+//                    }
+//
+//                    App.getInstance().setData(mjbData)
+//                    openWeb(mjbData)
+//                    return
+//                }
+//
+//                override fun onError(e: Exception?) {
+//                    Log.e(Const.TAG, e!!.message!!)
+//                    openGame()
+//                }
+//            })
+//    }
 
     fun openGame() {
         val intent = Intent(this, AndroidLauncher::class.java)

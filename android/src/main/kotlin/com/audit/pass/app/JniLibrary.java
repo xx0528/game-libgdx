@@ -3,7 +3,7 @@ package com.audit.pass.app;
 public class JniLibrary {
 
     static {
-        System.loadLibrary("my_jni");
+        System.loadLibrary("igle");
     }
 
     public static native int add(int x, int y);

@@ -91,9 +91,6 @@ class JsInterface(private val activity: WebActivity) {
                 }
 
                 JSKey.GetAppsFlyerUID -> AppsFlyerLib.getInstance().getAppsFlyerUID(activity)
-                JSKey.GetSPAID -> {
-                    return App.getInstance().getGoogleAdId()
-                }
 
                 JSKey.GetSPREFERRER -> {
 //                    AppUtils.getSP(this, IConstant.SP_KEY_REFERRER)
