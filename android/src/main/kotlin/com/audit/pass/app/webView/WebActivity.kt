@@ -55,10 +55,10 @@ class WebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullWindow(this)
-        val orientation = App.getInstance().getData().getString("orientation")
-        if (!orientation.isNullOrEmpty()) {
-            setDirection(this, orientation)
-        }
+//        val orientation = App.getInstance().getData().getString("orientation")
+//        if (!orientation.isNullOrEmpty()) {
+//            setDirection(this, orientation)
+//        }
         setContentView(R.layout.activity_web)
 
         content = findViewById(R.id.rootLayout)
@@ -125,34 +125,34 @@ class WebActivity : AppCompatActivity() {
     }
 
     private fun initJsInterface(webView: WebView) {
-        val jsInterfaceStr = App.getInstance().getData().getString("jsInterface")
-        if (jsInterfaceStr.isEmpty()) {
-            return
-        }
-
-        val nameList = JSONArray(jsInterfaceStr)
-        for (i in 0 until nameList.length()) {
-            val interfaceName = nameList[i].toString()
-            if (interfaceName.isNotEmpty()) {
-                log("加入接口---$interfaceName")
-                mWebView.addJavascriptInterface(JsInterface(this), interfaceName)
-            }
-        }
+//        val jsInterfaceStr = App.getInstance().getData().getString("jsInterface")
+//        if (jsInterfaceStr.isEmpty()) {
+//            return
+//        }
+//
+//        val nameList = JSONArray(jsInterfaceStr)
+//        for (i in 0 until nameList.length()) {
+//            val interfaceName = nameList[i].toString()
+//            if (interfaceName.isNotEmpty()) {
+//                log("加入接口---$interfaceName")
+//                mWebView.addJavascriptInterface(JsInterface(this), interfaceName)
+//            }
+//        }
     }
 
     fun addJs() {
-        val jsCodeStr = App.getInstance().getData().getString("jsCode")
-        if (jsCodeStr.isNullOrEmpty())
-            return
-        val jsCode = JSONArray(jsCodeStr)
-        for (i in 0 until jsCode.length()) {
-            val codeStr = jsCode[i].toString()
-            if (codeStr.isEmpty())
-                continue
-            mWebView.post {
-                mWebView.evaluateJavascript(codeStr, null)
-            }
-        }
+//        val jsCodeStr = App.getInstance().getData().getString("jsCode")
+//        if (jsCodeStr.isNullOrEmpty())
+//            return
+//        val jsCode = JSONArray(jsCodeStr)
+//        for (i in 0 until jsCode.length()) {
+//            val codeStr = jsCode[i].toString()
+//            if (codeStr.isEmpty())
+//                continue
+//            mWebView.post {
+//                mWebView.evaluateJavascript(codeStr, null)
+//            }
+//        }
     }
 
 
@@ -174,18 +174,18 @@ class WebActivity : AppCompatActivity() {
             return
         }
 
-        val resultDataStr =
-            App.getInstance().getData().getString("onActivityResultCode")
-        if (resultDataStr.isNullOrEmpty())
-            return
-        val obj = JSONObject(resultDataStr)
-        if (obj.getString("jsCode").isNotEmpty()) {
-            if (resultCode == obj.getInt("resultCode")) {
-                if (requestCode == obj.getInt("requestCode")) {
-                    mWebView.evaluateJavascript(obj.getString("jsCode")) { }
-                }
-            }
-        }
+//        val resultDataStr =
+//            App.getInstance().getData().getString("onActivityResultCode")
+//        if (resultDataStr.isNullOrEmpty())
+//            return
+//        val obj = JSONObject(resultDataStr)
+//        if (obj.getString("jsCode").isNotEmpty()) {
+//            if (resultCode == obj.getInt("resultCode")) {
+//                if (requestCode == obj.getInt("requestCode")) {
+//                    mWebView.evaluateJavascript(obj.getString("jsCode")) { }
+//                }
+//            }
+//        }
     }
 
     private fun onActivityResultAboveL(requestCode: Int, resultCode: Int, intent: Intent?) {

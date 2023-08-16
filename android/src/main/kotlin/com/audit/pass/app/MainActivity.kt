@@ -20,6 +20,14 @@ import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        @JvmStatic
+        fun receiveData(content: String) {
+            // 在这里处理接收到的数据
+            println("Received data: $content")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullWindow(this)

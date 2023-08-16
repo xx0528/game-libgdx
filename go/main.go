@@ -1,9 +1,3 @@
-/*
- * @Author: xx
- * @Date: 2023-08-11 18:38:46
- * @LastEditTime: 2023-08-14 20:07:17
- * @Description:
- */
 package main
 
 import "C"
@@ -11,6 +5,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -91,46 +86,59 @@ func remove_int(x, y int) int {
 }
 
 //export encrypt
-func encrypt(plainText []byte) []byte {
+func encrypt(plainText *C.char) *C.char {
 	block, err := aes.NewCipher(kk)
 	if err != nil {
 		fmt.Println("Error creating AES cipher:", err)
 		return nil
 	}
 
-	ciphertext := make([]byte, aes.BlockSize+len(plainText))
+	goPlainText := C.GoString(plainText)
+	plainTextBytes := []byte(goPlainText)
+
+	ciphertext := make([]byte, aes.BlockSize+len(plainTextBytes))
 	iv := ciphertext[:aes.BlockSize]
 	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
 		fmt.Println("Error generating IV:", err)
 		return nil
 	}
 	cfbEncrypter := cipher.NewCFBEncrypter(block, iv)
-	cfbEncrypter.XORKeyStream(ciphertext[aes.BlockSize:], plainText)
+	cfbEncrypter.XORKeyStream(ciphertext[aes.BlockSize:], plainTextBytes)
 
-	return ciphertext
+	decodedBytes := base64.StdEncoding.EncodeToString(ciphertext)
+
+	return C.CString(string(decodedBytes))
 }
 
 //export decrypt
-func decrypt(ciphertext []byte) []byte {
+func decrypt(ciphertext *C.char) *C.char {
 	block, err := aes.NewCipher(kk)
 	if err != nil {
 		fmt.Println("Error creating AES cipher:", err)
 		return nil
 	}
 
-	iv := ciphertext[:aes.BlockSize]
-	cfbDecrypter := cipher.NewCFBDecrypter(block, iv)
-	decryptedText := make([]byte, len(ciphertext)-aes.BlockSize)
-	cfbDecrypter.XORKeyStream(decryptedText, ciphertext[aes.BlockSize:])
+	goCiphertext := C.GoString(ciphertext)
 
-	return decryptedText
+	decodeStr, _ := base64.StdEncoding.DecodeString(goCiphertext)
+
+	ciphertextBytes := []byte(decodeStr)
+
+	iv := ciphertextBytes[:aes.BlockSize]
+	cfbDecrypter := cipher.NewCFBDecrypter(block, iv)
+	decryptedText := make([]byte, len(ciphertextBytes)-aes.BlockSize)
+	cfbDecrypter.XORKeyStream(decryptedText, ciphertextBytes[aes.BlockSize:])
+
+	return C.CString(string(decryptedText))
 }
 
 func main() {
 	// fmt.Println(add(1, 4))
 	// fmt.Println(get_data(C.CString("http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json")))
-	var a = "欧文个IE日工额日和肉体"
-	encryptStr := encrypt([]byte(a))
-	fmt.Println("加密 --- : ", string(encryptStr))
-	fmt.Println("解密--- : ", string(decrypt(encryptStr)))
+	var a = "将 Go 字符串转换为 jstring 返回"
+	encryptStr := encrypt(C.CString(a))
+	fmt.Println("加密 --- : ", C.GoString(encryptStr))
+	// decodeStr, _ := base64.StdEncoding.DecodeString(C.GoString(encryptStr))
+	fmt.Println("解密--- : ", C.GoString(decrypt(encryptStr)))
+
 }

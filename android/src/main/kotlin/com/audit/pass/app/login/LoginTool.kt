@@ -32,18 +32,18 @@ object LoginTool {
      */
     fun initOnCreate(activity: ComponentActivity) {
 
-        val data = App.getInstance().getData()
-        if (data.getBoolean(JSKey.FbLogin)) {
-            facebookLoginClient = FacebookLoginClientFactory().create(activity)
-        }
-
-        if (data.getBoolean(JSKey.TwitterLogin)) {
-            twitterLoginClient = TwitterLoginClientFactory().create(activity)
-        }
-
-        if (data.getBoolean(JSKey.LinkedInLogin)) {
-            linkedInLoginClient = LinkedInLoginClientFactory().create(activity)
-        }
+//        val data = App.getInstance().getData()
+//        if (data.getBoolean(JSKey.FbLogin)) {
+//            facebookLoginClient = FacebookLoginClientFactory().create(activity)
+//        }
+//
+//        if (data.getBoolean(JSKey.TwitterLogin)) {
+//            twitterLoginClient = TwitterLoginClientFactory().create(activity)
+//        }
+//
+//        if (data.getBoolean(JSKey.LinkedInLogin)) {
+//            linkedInLoginClient = LinkedInLoginClientFactory().create(activity)
+//        }
     }
 
     fun login(context: WebActivity, loginType: LoginType, isWaitForResult: Boolean = true) : String {

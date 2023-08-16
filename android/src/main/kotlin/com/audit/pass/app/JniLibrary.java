@@ -12,4 +12,8 @@ public class JniLibrary {
 
     public static native String getData(String input);
 
+    public static native String encrypt(String content);
+
+    public static native String decrypt(String content);
+
 }

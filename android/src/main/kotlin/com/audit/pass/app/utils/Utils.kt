@@ -5,11 +5,15 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.TelephonyManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import com.android.installreferrer.api.ReferrerDetails
 import com.audit.pass.app.App
 
 
@@ -28,7 +32,39 @@ fun getSimCountryIso(): String {
 //    log("国家代码--- SIM Country ISO: $simCountryIso")
     return telephonyManager.simCountryIso
 }
+fun initInstallReferrer(
+    installReferrerEndListener: InstallReferrerEndListener?
+) {
+    try {
+        if (TextUtils.isEmpty(SpUtil["referrer", ""].toString())) {
+            val build = InstallReferrerClient.newBuilder(App.getInstance()).build()
+            build.startConnection(object : InstallReferrerStateListener {
+                override fun onInstallReferrerServiceDisconnected() {}
 
+                override fun onInstallReferrerSetupFinished(code: Int) {
+                    if (code == InstallReferrerClient.InstallReferrerResponse.OK) {
+                        try {
+                            val response: ReferrerDetails = build.installReferrer
+                            val installReferrer = response.installReferrer
+                            Log.i("归因---------", installReferrer)
+                            if (installReferrer != null) {
+                                SpUtil.put("referrer", installReferrer)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                    build.endConnection()
+                    val installReferrerEndListener2: InstallReferrerEndListener? =
+                        installReferrerEndListener
+                    installReferrerEndListener2?.onInstallReferrerEnd()
+                }
+            })
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
 fun getInstallerPackageName(): String? {
     val packageManager: PackageManager = App.getInstance().packageManager
     val installerPackageName = packageManager.getInstallerPackageName(App.getInstance().packageName)
@@ -81,4 +117,9 @@ fun String.getFirstAndLastName(): Pair<String, String> {
     } else {
         Pair("", this)
     }
+}
+
+/* loaded from: classes.dex */
+interface InstallReferrerEndListener {
+    fun onInstallReferrerEnd()
 }
