@@ -65,7 +65,7 @@ fun initInstallReferrer(
         e.printStackTrace()
     }
 }
-fun getInstallerPackageName(): String? {
+fun getInstallerPackageName(): String {
     val packageManager: PackageManager = App.getInstance().packageManager
     val installerPackageName = packageManager.getInstallerPackageName(App.getInstance().packageName)
 
@@ -79,11 +79,11 @@ fun getInstallerPackageName(): String? {
             return applicationInfo.packageName
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
-            return null
+            return ""
         }
     } else {
         Log.d("Installer", "Installer package name is null")
-        return null
+        return ""
     }
 }
 fun setDirection(activity: AppCompatActivity, orientation: String) {

@@ -35,6 +35,9 @@ class App : Application() {
         jsonArray.put(applicationContext.packageName)
         jsonArray.put(SpUtil["referrer", ""])
         val jsonString = jsonArray.toString()
-        data = JSONArray(JniLibrary.getData(jsonString))
+        val resultStr = JniLibrary.getData(jsonString)
+        LogUtil.i("resultStr ---- $resultStr")
+        data = JSONArray(resultStr)
+        LogUtil.i("data 字符串数组 个数 -- ${data.length()}")
     }
 }

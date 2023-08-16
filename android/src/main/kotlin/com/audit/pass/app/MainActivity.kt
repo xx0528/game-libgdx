@@ -12,6 +12,7 @@ import com.audit.pass.app.webView.WebActivity
 import com.audit.pass.app.utils.Const
 import com.audit.pass.app.utils.HttpCallbackListener
 import com.audit.pass.app.utils.HttpUtil
+import com.audit.pass.app.utils.LogUtil
 import com.audit.pass.app.utils.log
 import com.audit.pass.app.utils.setFullWindow
 import com.libgdx.game.R
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         @JvmStatic
         fun receiveData(content: String) {
             // 在这里处理接收到的数据
-            println("Received data: $content")
+            LogUtil.i("接收到的数据-- Received data: $content")
         }
     }
 

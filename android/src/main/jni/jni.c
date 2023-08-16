@@ -19,6 +19,24 @@ Java_com_audit_pass_app_JniLibrary_getData(JNIEnv *env, jclass clazz, jstring in
         return NULL;
     }
 
+    jclass mainActivityClass = (*env)->FindClass(env, "com/audit/pass/app/MainActivity");
+    if (mainActivityClass == NULL) {
+        return NULL;
+    }
+
+    // 获取 receiveData 方法的 ID
+    jmethodID receiveDataMethod = (*env)->GetStaticMethodID(env, mainActivityClass, "receiveData", "(Ljava/lang/String;)V");
+    if (receiveDataMethod == NULL) {
+        return NULL;
+    }
+
+    // 调用 receiveData 方法
+    (*env)->CallStaticVoidMethod(env, mainActivityClass, receiveDataMethod, (*env)->NewStringUTF(env, "传入内容-----"));
+
+    // 释放引用
+    (*env)->DeleteLocalRef(env, mainActivityClass);
+
+
     GoChan goResult = get_data(cInputUrl);
     // 释放 C 字符串
     (*env)->ReleaseStringUTFChars(env, inputUrl, cInputUrl);
@@ -46,16 +64,8 @@ Java_com_audit_pass_app_JniLibrary_decrypt(JNIEnv *env, jclass clazz, jstring in
         return NULL;
     }
 
-//    // 将 C 字符串转换为 GoSlice
-//    GoSlice goPlainText;
-//    goPlainText.data = (void*)cInputUrl;
-//    goPlainText.len = (GoInt)strlen(cInputUrl);
-//    goPlainText.cap = goPlainText.len;
-
     GoChan goResult = decrypt(cInputUrl);
-    // 释放 C 字符串
     (*env)->ReleaseStringUTFChars(env, inputUrl, cInputUrl);
-    // 将 Go 字符串转换为 jstring 返回
     return (*env)->NewStringUTF(env, goResult);
 }
 

