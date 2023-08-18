@@ -75,8 +75,6 @@ extern "C" {
 #endif
 
 extern char* get_data(char* input);
-extern GoInt add(GoInt x, GoInt y);
-extern GoInt remove_int(GoInt x, GoInt y);
 extern char* encrypt(char* plainText);
 extern char* decrypt(char* ciphertext);
 

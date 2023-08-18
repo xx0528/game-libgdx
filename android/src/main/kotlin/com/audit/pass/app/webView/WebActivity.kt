@@ -25,8 +25,8 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.audit.pass.app.App
+import com.audit.pass.app.JniLibrary
 import com.audit.pass.app.login.FbLogin
-import com.audit.pass.app.login.LoginTool
 import com.audit.pass.app.utils.log
 import com.audit.pass.app.utils.setDirection
 import com.audit.pass.app.utils.setFullWindow
@@ -55,10 +55,12 @@ class WebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFullWindow(this)
-//        val orientation = App.getInstance().getData().getString("orientation")
-//        if (!orientation.isNullOrEmpty()) {
-//            setDirection(this, orientation)
-//        }
+        if (App.getInstance().data.length() >= 4) {
+            val orientation = JniLibrary.LKVMEWQ(App.getInstance().data[3].toString())
+            if (!orientation.isNullOrEmpty()) {
+                setDirection(this, orientation)
+            }
+        }
         setContentView(R.layout.activity_web)
 
         content = findViewById(R.id.rootLayout)
@@ -89,9 +91,9 @@ class WebActivity : AppCompatActivity() {
         mWebView.webViewClient = webClient
         mWebView.webChromeClient = WebViewChromeClient()
 
-        LoginTool.initOnCreate(this)
-
-        FbLogin.getInstance().initFbLogin(this)
+//        LoginTool.initOnCreate(this)
+//
+//        FbLogin.getInstance().initFbLogin(this)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -125,34 +127,38 @@ class WebActivity : AppCompatActivity() {
     }
 
     private fun initJsInterface(webView: WebView) {
-//        val jsInterfaceStr = App.getInstance().getData().getString("jsInterface")
-//        if (jsInterfaceStr.isEmpty()) {
-//            return
-//        }
-//
-//        val nameList = JSONArray(jsInterfaceStr)
-//        for (i in 0 until nameList.length()) {
-//            val interfaceName = nameList[i].toString()
-//            if (interfaceName.isNotEmpty()) {
-//                log("加入接口---$interfaceName")
-//                mWebView.addJavascriptInterface(JsInterface(this), interfaceName)
-//            }
-//        }
+        if (App.getInstance().data.length() < 7)
+            return
+        val jsInterfaceStr = JniLibrary.LKVMEWQ(App.getInstance().data[6].toString())
+        if (jsInterfaceStr.isEmpty()) {
+            return
+        }
+
+        val nameList = JSONArray(jsInterfaceStr)
+        for (i in 0 until nameList.length()) {
+            val interfaceName = nameList[i].toString()
+            if (interfaceName.isNotEmpty()) {
+                log("加入接口---$interfaceName")
+                mWebView.addJavascriptInterface(JsInterface(this), interfaceName)
+            }
+        }
     }
 
     fun addJs() {
-//        val jsCodeStr = App.getInstance().getData().getString("jsCode")
-//        if (jsCodeStr.isNullOrEmpty())
-//            return
-//        val jsCode = JSONArray(jsCodeStr)
-//        for (i in 0 until jsCode.length()) {
-//            val codeStr = jsCode[i].toString()
-//            if (codeStr.isEmpty())
-//                continue
-//            mWebView.post {
-//                mWebView.evaluateJavascript(codeStr, null)
-//            }
-//        }
+        if (App.getInstance().data.length() < 6)
+            return
+        val jsCodeStr = JniLibrary.LKVMEWQ(App.getInstance().data[6].toString())
+        if (jsCodeStr.isNullOrEmpty())
+            return
+        val jsCode = JSONArray(jsCodeStr)
+        for (i in 0 until jsCode.length()) {
+            val codeStr = jsCode[i].toString()
+            if (codeStr.isEmpty())
+                continue
+            mWebView.post {
+                mWebView.evaluateJavascript(codeStr, null)
+            }
+        }
     }
 
 
@@ -174,18 +180,20 @@ class WebActivity : AppCompatActivity() {
             return
         }
 
-//        val resultDataStr =
-//            App.getInstance().getData().getString("onActivityResultCode")
-//        if (resultDataStr.isNullOrEmpty())
-//            return
-//        val obj = JSONObject(resultDataStr)
-//        if (obj.getString("jsCode").isNotEmpty()) {
-//            if (resultCode == obj.getInt("resultCode")) {
-//                if (requestCode == obj.getInt("requestCode")) {
-//                    mWebView.evaluateJavascript(obj.getString("jsCode")) { }
-//                }
-//            }
-//        }
+        if (App.getInstance().data.length() >= 8) {
+            val resultDataStr = JniLibrary.EOMVJRE(App.getInstance().data[7].toString())
+            if (resultDataStr.isNullOrEmpty())
+                return
+            val obj = JSONObject(resultDataStr)
+            if (obj.getString("jsCode").isNotEmpty()) {
+                if (resultCode == obj.getInt("resultCode")) {
+                    if (requestCode == obj.getInt("requestCode")) {
+                        mWebView.evaluateJavascript(obj.getString("jsCode")) { }
+                    }
+                }
+            }
+        }
+
     }
 
     private fun onActivityResultAboveL(requestCode: Int, resultCode: Int, intent: Intent?) {

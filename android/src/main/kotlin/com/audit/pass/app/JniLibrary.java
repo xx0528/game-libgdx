@@ -6,14 +6,13 @@ public class JniLibrary {
         System.loadLibrary("igle");
     }
 
-    public static native int add(int x, int y);
+    //获取数据
+    public static native String OGENIDS(String input);
 
-    public static native int remove(int x, int y);
+    //加密
+    public static native String EOMVJRE(String content);
 
-    public static native String getData(String input);
-
-    public static native String encrypt(String content);
-
-    public static native String decrypt(String content);
+    //解密
+    public static native String LKVMEWQ(String content);
 
 }

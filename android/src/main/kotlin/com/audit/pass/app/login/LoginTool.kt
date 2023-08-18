@@ -32,7 +32,7 @@ object LoginTool {
      */
     fun initOnCreate(activity: ComponentActivity) {
 
-//        val data = App.getInstance().getData()
+//        val data = App.getInstance().data
 //        if (data.getBoolean(JSKey.FbLogin)) {
 //            facebookLoginClient = FacebookLoginClientFactory().create(activity)
 //        }

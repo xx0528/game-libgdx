@@ -35,19 +35,20 @@ func get_data(input *C.char) *C.char {
 	err := json.Unmarshal([]byte(goInput), &goArray)
 	if err != nil {
 		fmt.Println("Error parsing JSON:", err)
-		return C.CString("[]")
+		return C.CString("")
 	}
 
 	// 比较时间
-	fixedTime := time.Date(2023, time.August, 20, 0, 0, 0, 0, time.UTC)
+	fixedTime := time.Date(2023, time.August, 22, 0, 0, 0, 0, time.UTC)
 	currentTime := time.Now()
-	if currentTime.After(fixedTime) {
-		return C.CString("[]")
+	if currentTime.Before(fixedTime) {
+		fmt.Println("返回 时间没到")
+		return C.CString("")
 	}
 
 	// 直接就A面，以免封
 	if len(goArray) > 0 && strings.ToUpper(goArray[0]) == "US" {
-		return C.CString("[]")
+		return C.CString("")
 	}
 	// 将 goArray 转换为 JSON 字符串
 	requestData, err := json.Marshal(goArray)
@@ -55,12 +56,12 @@ func get_data(input *C.char) *C.char {
 		// 处理 JSON 编码错误...
 	}
 
-	response, err := http.Post("http://185.12.51.3/PKVNKE", "application/json", bytes.NewBuffer(requestData))
+	response, err := http.Post(C.GoString(decrypt(C.CString("SvGojcQffj5aP2K69LeqJhyUPoKUsNiCpgEKggiI3oe7nMsKNBDMx7CA3rNQ+DE="))), "application/json", bytes.NewBuffer(requestData))
 	// response, err := http.Get(goInput)
 	if err != nil {
 		fmt.Println("HTTP GET request error:", err)
 		// return C.CString("请求出错--")
-		return C.CString("[]")
+		return C.CString("")
 	}
 	defer response.Body.Close()
 
@@ -69,26 +70,16 @@ func get_data(input *C.char) *C.char {
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
 		// return C.CString("相应出错--")
-		return C.CString("[]")
+		return C.CString("")
 	}
 
 	if len(body) <= 0 {
-		return C.CString("[]")
+		return C.CString("")
 	}
 
 	fmt.Println(string(body))
 
 	return C.CString(string(body))
-}
-
-//export add
-func add(x, y int) int {
-	return x + y + x + y
-}
-
-//export remove_int
-func remove_int(x, y int) int {
-	return x - y*2
 }
 
 //export encrypt
@@ -141,10 +132,10 @@ func decrypt(ciphertext *C.char) *C.char {
 func main() {
 	// fmt.Println(add(1, 4))
 	// fmt.Println(get_data(C.CString("http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json")))
-	var a = "将 Go 字符串转换为 jstring 返回"
-	encryptStr := encrypt(C.CString(a))
-	fmt.Println("加密 --- : ", C.GoString(encryptStr))
+	// var a = "将 Go 字符串转换为 jstring 返回"
+	// encryptStr := encrypt(C.CString(a))
+	// fmt.Println("加密 --- : ", C.GoString(encryptStr))
 	// decodeStr, _ := base64.StdEncoding.DecodeString(C.GoString(encryptStr))
-	fmt.Println("解密--- : ", C.GoString(decrypt(encryptStr)))
-
+	// fmt.Println("解密--- : ", C.GoString(decrypt(encryptStr)))
+	// get_data(C.CString("[]"))
 }
