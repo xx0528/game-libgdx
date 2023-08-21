@@ -1,7 +1,7 @@
 /*
  * @Author: xx
  * @Date: 2023-03-17 16:25:35
- * @LastEditTime: 2023-08-18 19:14:51
+ * @LastEditTime: 2023-08-21 11:45:01
  * @Description:
  */
 package main
@@ -19,6 +19,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"regexp"
 	"strings"
 	"time"
 
@@ -105,12 +106,12 @@ func requestData(c *gin.Context) {
 		return
 	}
 
-	if len(decryptData) >= 2 && decryptData[1] == "" {
-		decryptData = append(decryptData, "InstallerPackageName包为空")
-		logRequest(c.Request, decryptData)
-		c.JSON(http.StatusOK, "")
-		return
-	}
+	// if len(decryptData) >= 2 && decryptData[1] == "" {
+	// 	decryptData = append(decryptData, "InstallerPackageName包为空")
+	// 	logRequest(c.Request, decryptData)
+	// 	c.JSON(http.StatusOK, "")
+	// 	return
+	// }
 
 	if len(decryptData) >= 3 && decryptData[2] == "" {
 		decryptData = append(decryptData, "包名为空")
@@ -119,11 +120,24 @@ func requestData(c *gin.Context) {
 		return
 	}
 
-	if len(decryptData) >= 4 && decryptData[3] == "" {
-		decryptData = append(decryptData, "referrer为空")
-		logRequest(c.Request, decryptData)
-		c.JSON(http.StatusOK, "")
-		return
+	//自然流量 不打开
+	if len(decryptData) >= 4 {
+		// 定义正则表达式，匹配 utm_medium= 后面的值
+		re := regexp.MustCompile(`utm_medium=([^&]+)`)
+		match := re.FindStringSubmatch(decryptData[3])
+
+		utmMediumValue := ""
+		if len(match) >= 2 {
+			utmMediumValue = match[1]
+			fmt.Println("归因 utm_medium 匹配值 :", utmMediumValue)
+		}
+
+		if utmMediumValue == "" || utmMediumValue == "organic" {
+			decryptData = append(decryptData, "自然流量")
+			logRequest(c.Request, decryptData)
+			c.JSON(http.StatusOK, "")
+			return
+		}
 	}
 
 	if configMap.Origin["isOpen"] != "true" {

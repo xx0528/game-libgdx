@@ -5,18 +5,6 @@ import org.json.JSONObject
 
 
 object Const {
-    const val LINK_URL = "http://game-fiverr-slots.oss-ap-southeast-3.aliyuncs.com/config.json"
-    const val AF_KEY = "YcQCMtATkHdwH4nHUq3igV"
-    const val ADJUST_TOKEN = "xvssr72ru0ow"
-    const val SP_KEY_REFERRER = "referrer"
-    const val SP_KEY_AID = "aid"
-    const val APP_KEY_ID = "mjb0718"
-    const val AdjustToken = "AdjustToken"
-    const val AFKey = "AFKey"
-    const val Orientation = "Orientation"
-    const val JSInterfaceName = "JSInterfaceName"
-    const val URL = "url"
-    const val IsOpen = "isOpen"
     const val TAG = "MJB-------"
     const val TAGAF = "MJB--AppsFly-----"
 
@@ -26,13 +14,6 @@ object Const {
     const val LINKEDIN_ME = "https://api.linkedin.com/v2/me"
     const val LINKEDIN_EMAIL = "https://api.linkedin.com/v2/emailAddress"
 }
-
-data class ActivityResultData(
-    var resultCode: Int = -1,
-    var requestCode: Int = 1,
-    var jsCode: String = "",
-)
-
 
 object JSKey {
     const val Method : String = "method"

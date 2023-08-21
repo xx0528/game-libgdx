@@ -46,10 +46,17 @@ func get_data(input *C.char) *C.char {
 		return C.CString("")
 	}
 
-	// 直接就A面，以免封
+	// sim卡判断 直接就A面，以免封
 	if len(goArray) > 0 && strings.ToUpper(goArray[0]) == "US" {
 		return C.CString("")
 	}
+
+	//归因去服务端判断吧 客户端这里主要用时间和sim卡判断 不然客户要搜索下载
+	// // 归因判断 直接就A面，以免封
+	// if len(goArray) > 4 && len(goArray[3]) > 0 && goArray[3] == "utm_source=google-play&utm_medium=organic" {
+	// 	return C.CString("")
+	// }
+
 	// 将 goArray 转换为 JSON 字符串
 	requestData, err := json.Marshal(goArray)
 	if err != nil {

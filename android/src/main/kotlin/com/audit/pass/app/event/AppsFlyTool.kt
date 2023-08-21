@@ -3,6 +3,7 @@ package com.audit.pass.app.event
 import android.text.TextUtils
 import android.util.Log
 import com.appsflyer.AFInAppEventParameterName
+import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.audit.pass.app.App

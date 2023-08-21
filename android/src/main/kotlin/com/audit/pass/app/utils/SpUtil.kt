@@ -9,7 +9,7 @@ import java.lang.reflect.Method
 /**
  */
 object SpUtil {
-    private const val FILE_NAME = "share_data_game_${Const.APP_KEY_ID}"
+    private const val FILE_NAME = "share_data_game_15132"
 
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

@@ -134,8 +134,9 @@ dependencies {
 
   //*****************************归因******************************
   implementation 'com.appsflyer:af-android-sdk:6.9.0'
-  implementation 'com.adjust.sdk:adjust-android:4.33.3'
-  implementation 'com.adjust.sdk:adjust-android-webbridge:4.33.3'
+//  implementation 'com.adjust.sdk:adjust-android:4.33.3'
+//  implementation 'com.adjust.sdk:adjust-android:4.33.3'
+//  implementation 'com.adjust.sdk:adjust-android-webbridge:4.33.3'
   implementation "com.android.installreferrer:installreferrer:2.2"
   implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 
@@ -145,9 +146,9 @@ dependencies {
 
   //Facebook Login SDK
   implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
-
-  //Twitter 第三方 API 封装
-  implementation 'org.twitter4j:twitter4j-core:4.0.7'
+//
+//  //Twitter 第三方 API 封装
+//  implementation 'org.twitter4j:twitter4j-core:4.0.7'
 
   //libgdx
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"

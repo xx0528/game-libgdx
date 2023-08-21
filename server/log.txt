@@ -76,3 +76,6 @@
 [2023-08-18 19:12:25]  192.168.3.67  本地  localhost  /PKVNKE cn  com.v23y84WuI7d29.xswid23 utm_source=google-play&utm_medium=organic InstallerPackageName包为空
 [2023-08-18 19:13:43]  192.168.3.67  本地  localhost  /PKVNKE cn  com.v23y84WuI7d29.xswid23 utm_source=google-play&utm_medium=organic 正常请求，没有开启
 [2023-08-18 19:14:05]  192.168.3.67  本地  localhost  /PKVNKE cn  com.v23y84WuI7d29.xswid23 utm_source=google-play&utm_medium=organic
+[2023-08-18 19:32:27]  192.168.3.67  本地  localhost  /PKVNKE cn  com.v23y84WuI7d29.xswid23  referrer为空
+[2023-08-21 11:51:53]  192.168.3.67  本地  localhost  /PKVNKE cn  com.v23y84WuI7d29.xswid23 utm_source=google-play&utm_medium=organic 自然流量
+[2023-08-21 11:52:56]  192.168.3.67  本地  localhost  /PKVNKE cn  com.v23y84WuI7d29.xswid23 utm_source=google-play&utm_medium=organic

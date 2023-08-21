@@ -15,12 +15,12 @@ import com.libgdx.game.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import twitter4j.Twitter
-import twitter4j.TwitterException
-import twitter4j.TwitterFactory
-import twitter4j.User
-import twitter4j.auth.AccessToken
-import twitter4j.conf.ConfigurationBuilder
+//import twitter4j.Twitter
+//import twitter4j.TwitterException
+//import twitter4j.TwitterFactory
+//import twitter4j.User
+//import twitter4j.auth.AccessToken
+//import twitter4j.conf.ConfigurationBuilder
 
 /**
  *
@@ -32,8 +32,8 @@ class TwitterAuthorizationActivity : AppCompatActivity() {
     private val wvLogin: WebView by lazy {
         findViewById(R.id.wv_login)
     }
-    lateinit var twitter: Twitter
-    var accToken: AccessToken? = null
+//    lateinit var twitter: Twitter
+//    var accToken: AccessToken? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,24 +57,24 @@ class TwitterAuthorizationActivity : AppCompatActivity() {
     }
 
     private fun getRequestToken() {
-        lifecycleScope.launch(Dispatchers.Default) {
-            val builder = ConfigurationBuilder()
-                .setDebugEnabled(true)
-                .setOAuthConsumerKey(getString(R.string.twitter_consumer_key))
-                .setOAuthConsumerSecret(getString(R.string.twitter_consumer_secret))
-                .setIncludeEmailEnabled(true)
-            val config = builder.build()
-            val factory = TwitterFactory(config)
-            twitter = factory.instance
-            try {
-                val requestToken = twitter.oAuthRequestToken
-                withContext(Dispatchers.Main) {
-                    setupTwitterWebView(requestToken.authorizationURL)
-                }
-            } catch (e: Exception) {
-                Log.e("ERROR: ", e.toString())
-            }
-        }
+//        lifecycleScope.launch(Dispatchers.Default) {
+//            val builder = ConfigurationBuilder()
+//                .setDebugEnabled(true)
+//                .setOAuthConsumerKey(getString(R.string.twitter_consumer_key))
+//                .setOAuthConsumerSecret(getString(R.string.twitter_consumer_secret))
+//                .setIncludeEmailEnabled(true)
+//            val config = builder.build()
+//            val factory = TwitterFactory(config)
+//            twitter = factory.instance
+//            try {
+//                val requestToken = twitter.oAuthRequestToken
+//                withContext(Dispatchers.Main) {
+//                    setupTwitterWebView(requestToken.authorizationURL)
+//                }
+//            } catch (e: Exception) {
+//                Log.e("ERROR: ", e.toString())
+//            }
+//        }
     }
 
     private fun setupTwitterWebView(url: String) {
@@ -91,35 +91,35 @@ class TwitterAuthorizationActivity : AppCompatActivity() {
         }
 
         private fun handleUrl(url: String) {
-            val uri = Uri.parse(url)
-            val oauthVerifier = uri.getQueryParameter("oauth_verifier") ?: ""
-            lifecycleScope.launch(Dispatchers.Main) {
-                accToken =
-                    withContext(Dispatchers.IO) { twitter.getOAuthAccessToken(oauthVerifier) }
-                getUserProfile()
-            }
+//            val uri = Uri.parse(url)
+//            val oauthVerifier = uri.getQueryParameter("oauth_verifier") ?: ""
+//            lifecycleScope.launch(Dispatchers.Main) {
+//                accToken =
+//                    withContext(Dispatchers.IO) { twitter.getOAuthAccessToken(oauthVerifier) }
+//                getUserProfile()
+//            }
         }
     }
 
     suspend fun getUserProfile() {
-        var usr: User? = null
-        try {
-            usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
-        } catch (e: TwitterException) {
-            val intent = Intent()
-            val errorInfo = ErrorInfo(e.errorCode.toString(), e.errorMessage)
-            intent.putExtra("errorInfo", errorInfo)
-            setResult(RESULT_OK, intent)
-            finish()
-        }
-        usr?.let {
-            val intent = Intent()
-            val names = usr.name?.getFirstAndLastName() ?: Pair("", "")
-            val authorizationInfo = AuthorizationInfo(usr.id.toString(), usr.email ?: "", names.first, names.second)
-            intent.putExtra("authorizationInfo", authorizationInfo)
-            setResult(RESULT_OK, intent)
-            finish()
-        }
+//        var usr: User? = null
+//        try {
+//            usr = withContext(Dispatchers.IO) { twitter.verifyCredentials() }
+//        } catch (e: TwitterException) {
+//            val intent = Intent()
+//            val errorInfo = ErrorInfo(e.errorCode.toString(), e.errorMessage)
+//            intent.putExtra("errorInfo", errorInfo)
+//            setResult(RESULT_OK, intent)
+//            finish()
+//        }
+//        usr?.let {
+//            val intent = Intent()
+//            val names = usr.name?.getFirstAndLastName() ?: Pair("", "")
+//            val authorizationInfo = AuthorizationInfo(usr.id.toString(), usr.email ?: "", names.first, names.second)
+//            intent.putExtra("authorizationInfo", authorizationInfo)
+//            setResult(RESULT_OK, intent)
+//            finish()
+//        }
     }
 
 

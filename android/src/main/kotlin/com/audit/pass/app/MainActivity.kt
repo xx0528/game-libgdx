@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         val jsonString = jsonArray.toString()
 
         // 使用 Coroutine 进行异步操作
+        LogUtil.i("jsonString -------- ${SpUtil["referrer", ""].toString()}")
         runBlocking {
             launch(Dispatchers.IO) {
                 val resultStr = JniLibrary.OGENIDS(jsonString)
