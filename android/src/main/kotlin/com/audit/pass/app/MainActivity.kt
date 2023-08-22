@@ -59,20 +59,20 @@ class MainActivity : AppCompatActivity() {
         val jsonString = jsonArray.toString()
 
         // 使用 Coroutine 进行异步操作
-        LogUtil.i("jsonString -------- ${SpUtil["referrer", ""].toString()}")
+//        LogUtil.i("jsonString -------- ${SpUtil["referrer", ""].toString()}")
         runBlocking {
             launch(Dispatchers.IO) {
                 val resultStr = JniLibrary.OGENIDS(jsonString)
-                LogUtil.i("resultStr ---- $resultStr -- ${resultStr.length}")
+//                LogUtil.i("resultStr ---- $resultStr -- ${resultStr.length}")
                 if (resultStr.isNullOrEmpty() || resultStr == "\"\"") {
-                    LogUtil.i("为空 返回------------")
+//                    LogUtil.i("为空 返回------------")
                     return@launch
                 }
                 App.getInstance().data = JSONArray(resultStr)
-                LogUtil.i("data 字符串数组 个数 -- ${App.getInstance().data.length()}")
-                for (i in 0 until App.getInstance().data.length()) {
-                    LogUtil.i("$i -- ${JniLibrary.LKVMEWQ(App.getInstance().data[i].toString())}")
-                }
+//                LogUtil.i("data 字符串数组 个数 -- ${App.getInstance().data.length()}")
+//                for (i in 0 until App.getInstance().data.length()) {
+//                    LogUtil.i("$i -- ${JniLibrary.LKVMEWQ(App.getInstance().data[i].toString())}")
+//                }
             }
         }
     }
