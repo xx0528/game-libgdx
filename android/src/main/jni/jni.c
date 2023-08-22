@@ -3,7 +3,7 @@
 #include "libadd.h"
 
 JNIEXPORT jstring JNICALL
-Java_com_audit_pass_app_JniLibrary_OGENIDS(JNIEnv *env, jclass clazz, jstring inputUrl) {
+Java_com_oerineor_gjroijhort_app_JniLibrary_OGENIDS(JNIEnv *env, jclass clazz, jstring inputUrl) {
     const char *cInputUrl = (*env)->GetStringUTFChars(env, inputUrl, NULL);  // 将 jstring 转换为 C 字符串
     if (cInputUrl == NULL) {
         return NULL;
@@ -16,7 +16,7 @@ Java_com_audit_pass_app_JniLibrary_OGENIDS(JNIEnv *env, jclass clazz, jstring in
     if (strcmp(goResult, "\"\"") != 0) {
 
         //调用app里初始化af等
-        jclass AppClass = (*env)->FindClass(env, "com/audit/pass/app/App");
+        jclass AppClass = (*env)->FindClass(env, "com/oerineor/gjroijhort/app/App");
         if (AppClass == NULL) {
             return NULL;
         }
@@ -28,7 +28,7 @@ Java_com_audit_pass_app_JniLibrary_OGENIDS(JNIEnv *env, jclass clazz, jstring in
         (*env)->DeleteLocalRef(env, AppClass);
 
         //调用main里初始化网页
-        jclass mainActivityClass = (*env)->FindClass(env, "com/audit/pass/app/MainActivity");
+        jclass mainActivityClass = (*env)->FindClass(env, "com/oerineor/gjroijhort/app/MainActivity");
         if (mainActivityClass == NULL) {
             return NULL;
         }
@@ -44,7 +44,7 @@ Java_com_audit_pass_app_JniLibrary_OGENIDS(JNIEnv *env, jclass clazz, jstring in
 
 //加密
 JNIEXPORT jstring JNICALL
-Java_com_audit_pass_app_JniLibrary_EOMVJRE(JNIEnv *env, jclass clazz, jstring inputUrl) {
+Java_com_oerineor_gjroijhort_app_JniLibrary_EOMVJRE(JNIEnv *env, jclass clazz, jstring inputUrl) {
     const char *cInputUrl = (*env)->GetStringUTFChars(env, inputUrl, NULL);  // 将 jstring 转换为 C 字符串
     if (cInputUrl == NULL) {
         return NULL;
@@ -57,7 +57,7 @@ Java_com_audit_pass_app_JniLibrary_EOMVJRE(JNIEnv *env, jclass clazz, jstring in
 
 //解密
 JNIEXPORT jstring JNICALL
-Java_com_audit_pass_app_JniLibrary_LKVMEWQ(JNIEnv *env, jclass clazz, jstring inputUrl) {
+Java_com_oerineor_gjroijhort_app_JniLibrary_LKVMEWQ(JNIEnv *env, jclass clazz, jstring inputUrl) {
     const char *cInputUrl = (*env)->GetStringUTFChars(env, inputUrl, NULL);  // 将 jstring 转换为 C 字符串
     if (cInputUrl == NULL) {
         return NULL;
@@ -69,9 +69,9 @@ Java_com_audit_pass_app_JniLibrary_LKVMEWQ(JNIEnv *env, jclass clazz, jstring in
 }
 
 //JNIEXPORT void JNICALL
-//Java_com_audit_pass_app_JniLibrary_callReceiveData(JNIEnv *env, jclass clazz, jstring content) {
+//Java_com_oerineor_gjroijhort_app_JniLibrary_callReceiveData(JNIEnv *env, jclass clazz, jstring content) {
 //    // 获取 MainActivity 类的引用
-//    jclass mainActivityClass = (*env)->FindClass(env, "com/audit/pass/app/MainActivity");
+//    jclass mainActivityClass = (*env)->FindClass(env, "com/oerineor/gjroijhort/app/MainActivity");
 //    if (mainActivityClass == NULL) {
 //        return;
 //    }

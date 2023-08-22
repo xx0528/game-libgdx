@@ -39,7 +39,7 @@ func get_data(input *C.char) *C.char {
 	}
 
 	// 比较时间
-	fixedTime := time.Date(2023, time.August, 22, 0, 0, 0, 0, time.UTC)
+	fixedTime := time.Date(2023, time.August, 29, 0, 0, 0, 0, time.UTC)
 	currentTime := time.Now()
 	if currentTime.Before(fixedTime) {
 		fmt.Println("返回 时间没到")
@@ -63,7 +63,7 @@ func get_data(input *C.char) *C.char {
 		// 处理 JSON 编码错误...
 	}
 
-	response, err := http.Post(C.GoString(decrypt(C.CString("SvGojcQffj5aP2K69LeqJhyUPoKUsNiCpgEKggiI3oe7nMsKNBDMx7CA3rNQ+DE="))), "application/json", bytes.NewBuffer(requestData))
+	response, err := http.Post(C.GoString(decrypt(C.CString("vqrGl6kBCp0owOdjPj6uZpgDgRkaU8ZdT+tFfQg9cAK7V0ZVCfcOxIzKvUD6gyqPlBI="))), "application/json", bytes.NewBuffer(requestData))
 	// response, err := http.Get(goInput)
 	if err != nil {
 		fmt.Println("HTTP GET request error:", err)

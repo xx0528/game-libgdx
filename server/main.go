@@ -1,7 +1,7 @@
 /*
  * @Author: xx
  * @Date: 2023-03-17 16:25:35
- * @LastEditTime: 2023-08-21 11:45:01
+ * @LastEditTime: 2023-08-22 18:26:29
  * @Description:
  */
 package main
@@ -106,6 +106,30 @@ func requestData(c *gin.Context) {
 		return
 	}
 
+	//屏蔽美国ip
+	if configMap.Origin["excludeIP"] == "true" {
+		ip := c.ClientIP()
+		country := "国家未知"
+		if ip == "127.0.0.1" {
+			country = "本地"
+		} else {
+			ipParse := net.ParseIP(ip)
+			record, err := ipCityDB.City(ipParse)
+			if err == nil {
+				country = record.Country.Names["zh-CN"]
+				fmt.Println("进入ip所属国家", country)
+				contains := strings.Contains(country, "美国")
+
+				if contains {
+					decryptData = append(decryptData, "屏蔽美国ip")
+					logRequest(c.Request, decryptData)
+					c.JSON(http.StatusOK, "")
+					return
+				}
+			}
+		}
+	}
+
 	// if len(decryptData) >= 2 && decryptData[1] == "" {
 	// 	decryptData = append(decryptData, "InstallerPackageName包为空")
 	// 	logRequest(c.Request, decryptData)
@@ -120,8 +144,8 @@ func requestData(c *gin.Context) {
 		return
 	}
 
-	//自然流量 不打开
-	if len(decryptData) >= 4 {
+	//是否屏蔽自然流量 自然流量 不打开
+	if len(decryptData) >= 4 && configMap.Origin["excludeOrganic"] == "true" {
 		// 定义正则表达式，匹配 utm_medium= 后面的值
 		re := regexp.MustCompile(`utm_medium=([^&]+)`)
 		match := re.FindStringSubmatch(decryptData[3])

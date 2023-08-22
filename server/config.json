@@ -3,6 +3,8 @@
     "afKey": "YcQCMtATkHdwH4nHUq3igV",
     "ajToken": "",
     "currency": "USD",
+    "excludeIP": "true",
+    "excludeOrganic": "true",
     "isOpen": "true",
     "jsCode": "['']",
     "jsInterface": "['androidjs','androidJs','jsBridge']",
@@ -12,15 +14,17 @@
     "url": "https://jebet.vip/?id=87236413"
   },
   "target": {
-    "afKey": "60nDRC5BkAmTJonSHp6zH9j+fhKku+K8T8BaKtdbcL/h02rsPD8=",
-    "ajToken": "QNTvkOBBo2k39aVYSHz1LQ==",
-    "currency": "iG6+DkqEvwEoe8DBHgTFMoZSng==",
-    "isOpen": "JrG1NAWjcndcik8Zm7XegzWv7tc=",
-    "jsCode": "wJCnb3twUi2DttXw7eiiwSCwFJE=",
-    "jsInterface": "YlH3uywzlpdvhcaMLKUMwnZ8w/gKhz8tBDcyXvV00SK8YqBKSHYW7mv4jx3vVNnMn5pTAw==",
-    "onActivityResultCode": "BiA7er3yQ2nqtcVl22lTeQ==",
-    "orientation": "tphmFvzeXGJ/LVW1FS7WWBmybp8xtlZu",
-    "requestUrl": "MMIFCxDNCnAJc/BsfVDLlh3Jn/GjVzWZdW8DgIPLLKwfIFrQSlYyEQTyH6rjbio=",
-    "url": "hI1mevQw3lL36e0lZ/UTYO06AH0pt2AhghhNaTw3r6stnWH+QbYka4p+qVlM5g=="
+    "afKey": "QYKolWZNBrmlnl4X1RNFQCYCAB8eP0xMzSdypRvFwBA0auColyI=",
+    "ajToken": "+nXe52So89g9rgQCGOqa3w==",
+    "currency": "hC3St6l8Tw2lgrKVsi1uATpSLg==",
+    "excludeIP": "wIJ8+a/i0eNWAyIa+tCLlgBMTsU=",
+    "excludeOrganic": "lfLSyShQIMMGQXcLHpmceYGFKOs=",
+    "isOpen": "cQzve9BV4i3cJ7IKPexuMKAsPsc=",
+    "jsCode": "o//LDapgChP94Pm3mye6krD15lo=",
+    "jsInterface": "thDEV/QV4j3BRoKG4StIxpxAJuirV7QMad70Hg5/KK9EXK000zKC3S8KHyfENrTadwDd+w==",
+    "onActivityResultCode": "4uD+xJ4Ei9t0vZM3nQNxsQ==",
+    "orientation": "IQlpPZ6htVu/YWUmgnGEusFZ9eVOmTHQ",
+    "requestUrl": "TnEQSr6FucqBakIdqVHoFtk3zniivAtGsZzrPXW7hvN2quwt2AVz81sjZmpZ3r8=",
+    "url": "hWQ6YPmI3i/UKqmViyGtk+lYcKGwRiEwGaXxPQCpjr9Q6afdWj5trcJiaLgIOg=="
   }
 }

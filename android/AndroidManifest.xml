@@ -12,7 +12,7 @@
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
-        android:name="com.audit.pass.app.App"
+        android:name="com.oerineor.gjroijhort.app.App"
         android:allowBackup="true"
         android:appCategory="game"
         android:icon="@drawable/ic_launcher"
@@ -23,7 +23,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name="com.audit.pass.app.MainActivity"
+            android:name="com.oerineor.gjroijhort.app.MainActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="true"
             android:screenOrientation="landscape">
@@ -33,12 +33,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.libgdx.game.android.AndroidLauncher"
+            android:name="com.einvibtgudrx.bifhgaggmeetr4.android.AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="true"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.audit.pass.app.webView.WebActivity"
+            android:name="com.oerineor.gjroijhort.app.webView.WebActivity"
             android:hardwareAccelerated="true"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="false" />
