@@ -55,3 +55,15 @@ game-libgdx/server 是server，客户端访问的接口，接口可返回加密�
 有时 生成的 libadd.h 会有报错 32位的问题 改成64位
 typedef char _check_for_32_bit_pointer_matching_GoInt[sizeof(void*)==32/8 ? 1:-1];
 typedef char _check_for_64_bit_pointer_matching_GoInt[sizeof(void*)==64/8 ? 1:-1];
+
+
+启动server时会重新生成config.json加密后字符串，将 requestUrl 加密后的值复制到 go/main.go
+里的post地址
+response, err := http.Post(C.GoString(decrypt(C.CString("XxyUuOu0UaEh7nVxRIINAgmt28PYSQydvadFupMQnQWjopQIkfgnt2CvwH8="))), "application/json", bytes.NewBuffer(requestData))
+
+server支持
+router.GET("/set", setHandler)
+router.GET("/showlog", showlogHandler)
+router.GET("/reloadCfg", reloadCfg)
+
+libadd.so 的main.go里有判断时间和sim卡 如果是时间判断 没到时间直接就不走post 返回空
